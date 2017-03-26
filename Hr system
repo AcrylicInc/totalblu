@@ -17,3 +17,9 @@ People Management
 	offices
 	Compensation &
 	Staff profiles
+
+
+	php bin/console doctrine:database:create
+	php bin/console doctrine:schema:update --force
+	
+	http://symfony.com/doc/current/doctrine/registration_form.html

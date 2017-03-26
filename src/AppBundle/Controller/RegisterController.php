@@ -18,3 +18,4 @@ class RegisterController extends Controller
     {
         return $this->render('register/register.html.twig', array());
     }
+}
