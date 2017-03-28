@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
@@ -24,6 +26,12 @@ class CompanyAdmin implements AdvancedUserInterface, \Serializable
     private $username;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
+
+    /**
      * @ORM\Column(type="string", length=64)
      */
     private $password;
@@ -32,6 +40,8 @@ class CompanyAdmin implements AdvancedUserInterface, \Serializable
      * @ORM\Column(type="string", length=60, unique=true)
      */
     private $email;
+
+    
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
@@ -45,9 +55,45 @@ class CompanyAdmin implements AdvancedUserInterface, \Serializable
         // $this->salt = md5(uniqid(null, true));
     }
 
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+
     public function getUsername()
     {
         return $this->username;
+    }   
+
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword($password)
+    {
+        $this->plainPassword = $password;
+    }  
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
     }
 
     public function getSalt()
@@ -55,11 +101,6 @@ class CompanyAdmin implements AdvancedUserInterface, \Serializable
         // you *may* need a real salt depending on your encoder
         // see section on salt below
         return null;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     public function getRoles()

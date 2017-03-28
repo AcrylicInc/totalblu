@@ -1,9 +1,9 @@
 <?php
 
-// src/AppBundle/Form/UserType.php
+// src/AppBundle/Form/CompanyAdminType.php
 namespace AppBundle\Form;
 
-use AppBundle\Entity\User;
+use AppBundle\Entity\CompanyAdmin;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,13 +11,19 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class UserType extends AbstractType
+class CompanyAdminType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('email', EmailType::class)
+            ->add('termsAccepted', CheckboxType::class, array(
+                'mapped' => false,
+                'constraints' => new IsTrue(),
+            ))
             ->add('username', TextType::class)
             ->add('plainPassword', RepeatedType::class, array(
                 'type' => PasswordType::class,
@@ -30,7 +36,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => User::class,
+            'data_class' => CompanyAdmin::class,
         ));
     }
 }

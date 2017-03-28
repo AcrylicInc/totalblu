@@ -1,22 +1,41 @@
 Hr system
 
+Company Admins / HR
 
-Talent Aquision
-	Applications
-	Vacancies
-	Agencies
+	Talent Aquision
+		Applications
+		Vacancies
+		Agencies
 
-Attendance and leave
-	timesheets
-	overtime logger
-	time off application / approval
-	reporting
+	Attendance and leave
+		timesheets
+		overtime logger
+		time off approval
+		reporting
 
-People Management
-	departments
-	offices
-	Compensation &
-	Staff profiles
+	People Management
+		departments
+		offices
+		Compensation &
+		Staff profiles
+
+
+
+
+Users
+	
+	Planner
+		Reservations / Meeting schedules 
+		Notes
+		Client List
+
+	Leave
+		Time off application
+
+
+
+
+
 
 
 	php bin/console doctrine:database:create

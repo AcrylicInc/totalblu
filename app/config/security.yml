@@ -5,13 +5,14 @@ security:
     encoders:
         AppBundle\Entity\User:
             algorithm: bcrypt
+        AppBundle\Entity\CompanyAdmin: bcrypt
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         our_db_provider:
             entity:
-                class: AppBundle:User
-                property: username
+                class: AppBundle:CompanyAdmin
+                property: email
                 # if you're using multiple entity managers
                 # manager_name: customer
         in_memory:
@@ -31,5 +32,11 @@ security:
             # http_basic: ~
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
-            # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            form_login:
+                login_path: login
+                check_path: login
+                use_referer: true
+
+            
+            logout:
+                path: /logout
