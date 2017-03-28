@@ -42,3 +42,7 @@ Users
 	php bin/console doctrine:schema:update --force
 	
 	http://symfony.com/doc/current/doctrine/registration_form.html
+
+	https://knpuniversity.com/screencast/question-answer-day/symfony2-dynamic-subdomains
+
+	http://ondras.zarovi.cz/sql/demo/ totalblu
