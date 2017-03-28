@@ -39,6 +39,43 @@ class RegisterController extends Controller
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
 
+            return $this->redirectToRoute('register_company');
+        }
+
+        return $this->render(
+            'register/register.html.twig',
+            array('form' => $form->createView())
+        );
+    }
+
+    /**
+     * Matches /register/company exactly
+     *
+     * @Route("/register/company", name="register_company")
+     */
+    public function registerAction(Request $request)
+    {
+        // 1) build the form
+        $company = new Company();
+        $form = $this->createForm(CompanyType::class, $company);
+
+        // 2) handle the submit (will only happen on POST)
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // 3) Encode the password (you could also do this via Doctrine listener)
+            $password = $this->get('security.password_encoder')
+                ->encodePassword($company, $company->getPlainPassword());
+            $company->setPassword($password);
+
+            // 4) save the company!
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($company);
+            $em->flush();
+
+            // ... do any other work - like sending them an email, etc
+            // maybe set a "flash" success message for the company
+
             return $this->redirectToRoute('homepage');
         }
 

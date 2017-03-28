@@ -6,6 +6,7 @@ security:
         AppBundle\Entity\User:
             algorithm: bcrypt
         AppBundle\Entity\CompanyAdmin: bcrypt
+        AppBundle\Entity\Company: bcrypt
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:

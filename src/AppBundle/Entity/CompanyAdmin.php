@@ -5,13 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * @ORM\Table(name="tb_company_admins")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class CompanyAdmin implements AdvancedUserInterface, \Serializable
+class Company implements AdvancedUserInterface, \Serializable
 {
     /**
      * @ORM\Column(type="integer")
@@ -21,7 +20,17 @@ class CompanyAdmin implements AdvancedUserInterface, \Serializable
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=25)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=25)
+     */
+    private $lastName;
+
+     /**
+     * @ORM\Column(type="string", length=25)
      */
     private $username;
 
@@ -65,20 +74,39 @@ class CompanyAdmin implements AdvancedUserInterface, \Serializable
         $this->email = $email;
     }
 
-
-    public function getUsername()
+    public function getFirstName()
     {
-        return $this->username;
+        return $this->firstName;
     }   
 
-    public function setUsername($username)
+    public function setFirstName($firstName)
     {
-        $this->username = $username;
+        $this->firstName = $firstName;
+    }
+
+    public function getLastName()
+    {
+        return $this->lastName;
+    }   
+
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
     }
 
     public function getPlainPassword()
     {
         return $this->plainPassword;
+    }
+
+    public function getUsername()
+    {
+        return $this->email;
+    }
+
+    public function setUsername($username)
+    {
+        $this->username = $username;
     }
 
     public function setPlainPassword($password)
@@ -138,6 +166,8 @@ class CompanyAdmin implements AdvancedUserInterface, \Serializable
         return serialize(array(
             $this->id,
             $this->username,
+            $this->firstName,
+            $this->lastName,
             $this->password,
             $this->isActive,
             // see section on salt below
@@ -151,6 +181,8 @@ class CompanyAdmin implements AdvancedUserInterface, \Serializable
         list (
             $this->id,
             $this->username,
+            $this->firstName,
+            $this->lastName,
             $this->password,
             $this->isActive,
             // see section on salt below
