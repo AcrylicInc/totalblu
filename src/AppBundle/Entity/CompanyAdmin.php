@@ -5,12 +5,13 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 
 /**
  * @ORM\Table(name="tb_company_admins")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class Company implements AdvancedUserInterface, \Serializable
+class CompanyAdmin implements AdvancedUserInterface, \Serializable
 {
     /**
      * @ORM\Column(type="integer")
