@@ -5,14 +5,14 @@ security:
     encoders:
         AppBundle\Entity\User:
             algorithm: bcrypt
-        AppBundle\Entity\CompanyAdmin: bcrypt
+        AppBundle\Entity\CompanyUser: bcrypt
         AppBundle\Entity\Company: bcrypt
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         our_db_provider:
             entity:
-                class: AppBundle:CompanyAdmin
+                class: AppBundle:CompanyUser
                 property: email
                 # if you're using multiple entity managers
                 # manager_name: customer

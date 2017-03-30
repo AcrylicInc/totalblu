@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\CompanyUser;
 
 /**
  * Company
@@ -31,9 +32,9 @@ class Company
     /**
      * @var int
      *
-     * @ORM\Column(name="company_admin", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanyUser", type="integer")
      */
-    private $companyAdmin;
+    private $CompanyUser;
 
 
     /**
@@ -71,27 +72,27 @@ class Company
     }
 
     /**
-     * Set companyAdmin
+     * Set CompanyUser
      *
-     * @param integer $companyAdmin
+     * @param integer $CompanyUser
      *
      * @return Company
      */
-    public function setCompanyAdmin($companyAdmin)
+    public function setCompanyUser($CompanyUser)
     {
-        $this->companyAdmin = $companyAdmin;
+        $this->CompanyUser = $CompanyUser;
 
         return $this;
     }
 
     /**
-     * Get companyAdmin
+     * Get CompanyUser
      *
      * @return int
      */
-    public function getCompanyAdmin()
+    public function getCompanyUser()
     {
-        return $this->companyAdmin;
+        return $this->CompanyUser;
     }
 }
 

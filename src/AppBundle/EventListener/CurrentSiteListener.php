@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\Response;
 
 class CurrentSiteListener
 {
@@ -39,17 +40,25 @@ class CurrentSiteListener
         */
         $subdomain = str_replace('.totalblu.com', '', $host);
         
+
         $site = $this->em
                 ->getRepository('AppBundle:Company')
                 ->findOneBy(array('companyName' => $subdomain))
         ;
 
-        if ( !$site )
-            throw new NotFoundHttpException(sprintf(
-                'No site found for "%s", subdomain "%s"',
-                $host,
-                $subdomain
-            ));
+   
+			var_dump($subdomain);
+			
+		if ( $subdomain === 'totalblu.com' ) {
+		    return;
+		}
+
+		// $url = $this->router->generate('homepage');
+		// $response = new RedirectResponse($url);
+		// $event->setResponse($response);
+
+        if ( !$site ){
+       	}
         
         $siteManager = $this->siteManager;
         $siteManager->setCurrentSite($site);
