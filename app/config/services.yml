@@ -9,9 +9,11 @@ services:
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
     site_manager:
         class: AppBundle\Site\SiteManager
+        class: AppBundle\Controller\CustomExceptionController
+        arguments: ['@twig', '%kernel.debug%']
 
     current_site_listener:
         class: AppBundle\EventListener\CurrentSiteListener
-        arguments: ['@site_manager', '@doctrine.orm.default_entity_manager', '@router']
+        arguments: ['@site_manager', '@doctrine.orm.default_entity_manager', '@router', '@security.context']
         tags: 
         - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

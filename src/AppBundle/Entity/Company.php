@@ -34,7 +34,7 @@ class Company
      *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanyUser")
      */
-    private $CompanyUser;
+    private $companyUser;
 
 
     /**
@@ -78,9 +78,9 @@ class Company
      *
      * @return Company
      */
-    public function setCompanyUser($CompanyUser)
+    public function setCompanyUser($companyUser)
     {
-        $this->CompanyUser = $CompanyUser;
+        $this->companyUser = $companyUser;
 
         return $this;
     }
@@ -92,7 +92,7 @@ class Company
      */
     public function getCompanyUser()
     {
-        return $this->CompanyUser;
+        return $this->companyUser;
     }
 }
 

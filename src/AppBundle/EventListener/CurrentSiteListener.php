@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class CurrentSiteListener
 {
@@ -24,9 +25,16 @@ class CurrentSiteListener
 
 	private $basehost;
 
-	public function __construct(SiteManager $siteManager, EntityManager $em, UrlGeneratorInterface $urlGenerator )
+    /**
+     * @var SecurityContext
+     */
+    protected $context;
+
+	public function __construct(SiteManager $siteManager, EntityManager $em, UrlGeneratorInterface $urlGenerator, ContainerInterface $container)
 	{
         $this->urlGenerator = $urlGenerator;
+
+        $this->context = $context;
 
 		$this->siteManager = $siteManager;
 		$this->em = $em;
@@ -59,16 +67,45 @@ class CurrentSiteListener
             return;
 		}
 
-        /**
-        * Check if user is logged in
-        * and has access
+        $reservedSubdomains = array(
+            'totalblu.com', 'login'
+        );
+
+
+        if ( in_array($subdomain, $reservedSubdomains) ){
+            return;
+        }
+
+       /**
+        * If subdomain does not exist,
+        * show template
         */
-        
         if ( !$site ){
-            $response = new RedirectResponse($this->urlGenerator->generate('login'));
-            $event->setResponse($response);
-       	}
-        
+            return "No account";
+            die();
+        }
+
+        /**
+        *
+        * Check if user is authorised
+        * to access the site
+        */
+        var_dump($this->context);
+        //$user = $this->get('security.token_storage')->getToken()->getUser();
+       
+        $isAuth = 
+        $this->em->getRepository('AppBundle:Company')
+        ->findBy( array('companyName' => $subdomain, 'companyUser' => $user) );
+
+
+        if ( $isAuth ){
+            var_dump(true);
+        } else {
+            var_dump(false);
+        }
+
+            //   $response = new RedirectResponse($this->urlGenerator->generate('login'));
+            // $event->setResponse($response);
         $siteManager = $this->siteManager;
         $siteManager->setCurrentSite($site);
 
