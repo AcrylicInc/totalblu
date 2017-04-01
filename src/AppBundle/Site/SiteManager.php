@@ -1,8 +1,6 @@
 <?php
 namespace AppBundle\Site;
 
-use AppBundle\Entity\Site;
-
 class SiteManager
 {
 

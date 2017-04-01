@@ -1,8 +1,15 @@
+api:
+    resource: "@ApiBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+
 user_registration:
     path:     /register
     defaults: { _controller: AppBundle:Register:register }
+    
 logout:
     path: /logout

@@ -32,7 +32,7 @@ class Company
     /**
      * @var int
      *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanyUser", type="integer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CompanyUser")
      */
     private $CompanyUser;
 

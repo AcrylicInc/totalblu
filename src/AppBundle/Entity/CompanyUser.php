@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use AppBundle\Entity\Company;
 
 /**
  * @ORM\Table(name="tb_company_users")
@@ -210,5 +211,20 @@ class CompanyUser implements AdvancedUserInterface, \Serializable
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
+    }
+
+
+    /**
+    *   API Stuff
+    */
+
+    public function getUserInfo()
+    {
+        return [
+        'id'        => $this->getID(),
+        'firstname'        => $this->getFirstName(),
+        'lastname'        => $this->getLastName(),
+        'email'        => $this->getEmail(),
+        ];
     }
 }

@@ -12,12 +12,6 @@ services:
 
     current_site_listener:
         class: AppBundle\EventListener\CurrentSiteListener
-        arguments:
-            - "@site_manager"
-            - "@doctrine.orm.default_entity_manager"
-
-        tags:
-            -
-                name: kernel.event_listener
-                event: kernel.request
-                method: onKernalRequest
+        arguments: ['@site_manager', '@doctrine.orm.default_entity_manager', '@router']
+        tags: 
+        - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

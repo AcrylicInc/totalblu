@@ -4,26 +4,36 @@ namespace AppBundle\EventListener;
 use AppBundle\Site\SiteManager;
 use Doctrine\ORM\EntityManager;
 
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CurrentSiteListener
 {
+
+    /**
+     * @var UrlGeneratorInterface
+     */
+    private $urlGenerator;
+
 	private $siteManager;
 
 	private $em;
 
 	private $basehost;
 
-	public function __construct(SiteManager $siteManager, EntityManager $em, $baseHost = "totalblu.com")
+	public function __construct(SiteManager $siteManager, EntityManager $em, UrlGeneratorInterface $urlGenerator )
 	{
+        $this->urlGenerator = $urlGenerator;
+
 		$this->siteManager = $siteManager;
 		$this->em = $em;
-		$this->baseHost = $baseHost;
+		$this->baseHost = "totalblu.com";
 	}
 
-	public function onKernalRequest(GetResponseEvent $event)
+	public function onKernelRequest(GetResponseEvent $event)
 	{
 		$request = $event->getRequest();
 
@@ -33,8 +43,7 @@ class CurrentSiteListener
         * Todo
         * Work out why base_host doesn't work, should just return the site url
         */
-     //   $baseHost = $this->container->getParameter('base_host');
-
+  
         /*
         Return subdomain from base url
         */
@@ -46,21 +55,23 @@ class CurrentSiteListener
                 ->findOneBy(array('companyName' => $subdomain))
         ;
 
-   
-			var_dump($subdomain);
-			
 		if ( $subdomain === 'totalblu.com' ) {
-		    return;
+            return;
 		}
 
-		// $url = $this->router->generate('homepage');
-		// $response = new RedirectResponse($url);
-		// $event->setResponse($response);
-
+        /**
+        * Check if user is logged in
+        * and has access
+        */
+        
         if ( !$site ){
+            $response = new RedirectResponse($this->urlGenerator->generate('login'));
+            $event->setResponse($response);
        	}
         
         $siteManager = $this->siteManager;
         $siteManager->setCurrentSite($site);
+
+        // var_dump($siteManager->getCurrentSite());
 	}
 }

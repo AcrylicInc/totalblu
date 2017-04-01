@@ -79,9 +79,7 @@ class RegisterController extends Controller
             //Get users id
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $user = $user->getID();
-
-            $Company->setCompanyUser($user);
-
+        
             // 4) save the Company
             $em = $this->getDoctrine()->getManager();
             $em->persist($Company);
@@ -91,7 +89,7 @@ class RegisterController extends Controller
             // maybe set a "flash" success message for the CompanyUser
 
             // return $this->redirectToRoute('dashboard');
-            return $this->redirectToRoute('default');
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->render(
