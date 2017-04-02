@@ -4,6 +4,9 @@ parameters:
 #    parameter_name: value
 
 services:
+    # check_user_authorized:
+    #     class: AppBundle\Dashboard
+    #     arguments: ["@request_stack"]
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

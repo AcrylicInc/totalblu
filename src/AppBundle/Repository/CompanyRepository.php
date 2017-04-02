@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Company;
+
 /**
  * CompanyRepository
  *
@@ -10,4 +12,30 @@ namespace AppBundle\Repository;
  */
 class CompanyRepository extends \Doctrine\ORM\EntityRepository
 {
+
+	public function getAuthorizedUsers()
+	{
+		return $this->_em
+               ->getRepository('AppBundle:Company')
+               ->findOneBy(array('companyName' => $subdomain));
+	}
+
+	public function checkSiteExists( $subdomain)
+	{
+		$return = $this->_em
+                ->getRepository('AppBundle:Company')
+                ->findOneBy(array('companyName' => $subdomain))
+        ;
+
+        return count($return) <= 0 ? false : true;
+	}
+
+	public function checkUserIsAuthorized($subdomain, $userID)
+	{
+        $return = $this->_em
+            ->getRepository('AppBundle:Company')
+            ->findBy( array('companyName' => $subdomain, 'user' => $userID) );
+
+        return count($return) <= 0 ? false : true;
+	}
 }

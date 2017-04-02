@@ -3,16 +3,12 @@ api:
     type:     annotation
     prefix:   /
 
-
-logout:
-    path: /logout
-
 app:
     host:     "{subdomain}.totalblu.com"
     resource: "@AppBundle/Controller/"
-    defaults:
-        _controller: AppBundle:Dashboard:dashboard
+    type:     annotation
   
 site:
+    host:     "totalblu.com"
     resource: "@SiteBundle/Controller/"
     type:     annotation

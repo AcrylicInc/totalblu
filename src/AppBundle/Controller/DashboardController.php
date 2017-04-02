@@ -2,35 +2,48 @@
 
 // src/AppBundle/Contoller/DashboardController.php
 namespace AppBundle\Controller;
+use AppBundle\Entity\Company;
 
 use Doctrine\ORM\EntityManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class DashboardController extends Controller
 {
 
-    private $em;
-    private $request;
+    private $host;
+    protected $em;
 
-    public function __construct(\Doctrine\ORM\EntityManager $em, Request $request){
-        
-        $this->em = $em;
-        $this->request = $request;
-    }
-
-    /**#
+    /**
      * Matches / exactly
      *
-     * @Route("/")
-     * @Route("/dashboard", name="dashboard")
+     * @Route("/", name="dashboard")
+     * @Route("/dashboard")
      */
-    public function dashboardAction()
+    public function dashboardAction(Request $request)
     {
+    
+        $this->em = $this->getDoctrine()->getManager();
 
-        $this->userAuthorized();
+       $status = $this->userAuthorized($request);
+
+           switch ($status) {
+                case 'anon':
+                    return new RedirectResponse($this->generateUrl('login'));
+                    break;
+
+                case 'nosite':
+                    return $this->render('error/nosite.html.twig');
+                   break;
+               
+                case 'noauth':
+                    return $this->render('error/noauth.html.twig');
+                    break;
+            }
 
         return $this->render('manager/dashboard.html.twig', array(
 
@@ -38,28 +51,37 @@ class DashboardController extends Controller
     }
 
 
-    public function userAuthorized()
+    public function userAuthorized($request)
     {
-        var_dump($this->request);
-        die();
-        $host = $this->request->getHttpHost();
-
-        //Check site exists
-        $site = $this->em
-                ->getRepository('AppBundle:Company')
-                ->findOneBy(array('companyName' => $subdomain))
-        ;
-
-         /*
-        Return subdomain from base url
-        */
+        // Get user object, subdomain and host
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $host = $request->server->get('HTTP_HOST');
         $subdomain = str_replace('.totalblu.com', '', $host);
 
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-        $userID = $user->getId();
+        //Check the user is logged in, redirect to login if not.
+        if ( $user === "anon."){
+            return "anon";
+        }
 
-        $isAuth = $this->em->getRepository('AppBundle:Company')
-                ->findBy( array('companyName' => $subdomain, 'companyUser' => $userID) );
+        //Check company exists
+        $siteExists = 
+        $this->em
+            ->getRepository('AppBundle:Company')
+            ->checkSiteExists($subdomain);
+        ;
 
+        if ( !$siteExists ){
+            return "nosite";
+        }
+
+        $isAuth = 
+        $this->em
+            ->getRepository('AppBundle:Company')
+            ->checkUserIsAuthorized($subdomain, $user->getId())
+        ;
+
+        if ( !$isAuth ){
+            return "noauth";
+        }
     }
 }

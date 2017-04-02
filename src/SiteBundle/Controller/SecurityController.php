@@ -3,8 +3,8 @@
 // src/SiteBundle/Controller/SecurityController.php
 namespace SiteBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 class SecurityController extends Controller
@@ -33,6 +33,6 @@ class SecurityController extends Controller
      */
     public function logoutAction(Request $request)
     {
-      
+        return $this->redirectToRoute('homepage');
     }
 }
