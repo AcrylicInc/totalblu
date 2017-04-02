@@ -1,7 +1,7 @@
 <?php
 
-// src/AppBundle/Register/RegisterController.php
-namespace AppBundle\Controller;
+// src/SiteBundle/Register/RegisterController.php
+namespace SiteBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;

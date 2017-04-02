@@ -1,7 +1,7 @@
 <?php
 
-// src/AppBundle/Company/CompanyController.php
-namespace AppBundle\Controller;
+// src/SiteBundle/Contoller/HomeController.php
+namespace SiteBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
