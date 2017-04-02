@@ -1,5 +1,5 @@
 <?php
-// src/AppBundle/Entity/CompanyUser.php
+// src/AppBundle/Entity/User.php
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -9,10 +9,10 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use AppBundle\Entity\Company;
 
 /**
- * @ORM\Table(name="tb_company_users")
+ * @ORM\Table(name="tb_users")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class CompanyUser implements AdvancedUserInterface, \Serializable
+class User implements AdvancedUserInterface, \Serializable
 {
     /**
      * @ORM\Column(type="integer")
@@ -31,10 +31,15 @@ class CompanyUser implements AdvancedUserInterface, \Serializable
      */
     private $lastName;
 
-     /**
+    /**
      * @ORM\Column(type="string", length=25)
      */
     private $username;
+
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    private $roles = ['ROLE_MANAGER'];
 
     /**
      * @Assert\NotBlank()
@@ -56,6 +61,8 @@ class CompanyUser implements AdvancedUserInterface, \Serializable
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company")
      */
     private $company;
+
+
 
     
 
@@ -156,7 +163,20 @@ class CompanyUser implements AdvancedUserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        
+        $roles = $this->roles;
+
+        // Set role_manager as default!
+        if ( count( $roles ) <= 0 ){
+            $roles[] = 'ROLE_MANAGER';
+        }
+
+        return $roles;
+    }
+
+    public function setRoles( array $roles )
+    {
+        $this->roles = $roles;
     }
 
     public function eraseCredentials()
@@ -193,6 +213,7 @@ class CompanyUser implements AdvancedUserInterface, \Serializable
             $this->lastName,
             $this->password,
             $this->isActive,
+            $this->roles,
             // see section on salt below
             // $this->salt,
         ));
@@ -208,6 +229,7 @@ class CompanyUser implements AdvancedUserInterface, \Serializable
             $this->lastName,
             $this->password,
             $this->isActive,
+            $this->roles,
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);

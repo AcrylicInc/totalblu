@@ -3,6 +3,15 @@ api:
     type:     annotation
     prefix:   /
 
+mobile_homepage:
+    path:     /
+    host:     "{subdomain}.totalblu.com"
+    defaults:
+        _controller: AppBundle:Main:mobileHomepage
+        subdomain: ryan
+    requirements:
+        subdomain: ryan|user
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation

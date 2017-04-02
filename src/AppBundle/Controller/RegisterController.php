@@ -3,8 +3,8 @@
 // src/AppBundle/Register/RegisterController.php
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\CompanyUser;
-use AppBundle\Form\CompanyUserType;
+use AppBundle\Entity\User;
+use AppBundle\Form\UserType;
 
 use AppBundle\Entity\Company;
 use AppBundle\Form\CompanyType;
@@ -18,13 +18,13 @@ class RegisterController extends Controller
     /**
      * Matches /register exactly
      *
-     * @Route("/register/user", name="register_user")
+     * @Route("/register", name="register")
      */
     public function registerUserAction(Request $request)
     {
-        $CompanyUser = new CompanyUser();
+        $User = new User();
 
-        $form = $this->createForm(CompanyUserType::class, $CompanyUser);
+        $form = $this->createForm(UserType::class, $User);
 
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
@@ -33,18 +33,18 @@ class RegisterController extends Controller
 
             // 3) Encode the password (you could also do this via Doctrine listener)
             $password = $this->get('security.password_encoder')
-                ->encodePassword($CompanyUser, $CompanyUser->getPlainPassword());
-            $CompanyUser->setPassword($password);
+                ->encodePassword($User, $User->getPlainPassword());
+            $User->setPassword($password);
 
-            // 4) save the CompanyUser!
+            // 4) save the User!
             $em = $this->getDoctrine()->getManager();
-            $em->persist($CompanyUser);
+            $em->persist($User);
             $em->flush();
 
             // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the CompanyUser
+            // maybe set a "flash" success message for the User
 
-            $token = new UsernamePasswordToken($CompanyUser, null, 'main', $CompanyUser->getRoles());
+            $token = new UsernamePasswordToken($User, null, 'main', $User->getRoles());
             $this->get('security.token_storage')->setToken($token);
             $this->get('session')->set('_security_main', serialize($token));
 

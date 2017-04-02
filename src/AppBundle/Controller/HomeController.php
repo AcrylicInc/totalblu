@@ -18,10 +18,9 @@ class HomeController extends Controller
     public function indexAction(Request $request)
     {
 
-        $siteManager = $this->container->get('site_manager');
 
         return $this->render('default/index.html.twig', array(
-            'site' => $siteManager->getCurrentSite(),
+
         ));
     }
 }

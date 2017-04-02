@@ -3,13 +3,15 @@ namespace AppBundle\EventListener;
 
 use AppBundle\Site\SiteManager;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class CurrentSiteListener
 {
@@ -18,8 +20,6 @@ class CurrentSiteListener
      * @var UrlGeneratorInterface
      */
     private $urlGenerator;
-
-	private $siteManager;
 
 	private $em;
 
@@ -30,13 +30,13 @@ class CurrentSiteListener
      */
     protected $context;
 
-	public function __construct(SiteManager $siteManager, EntityManager $em, UrlGeneratorInterface $urlGenerator, ContainerInterface $container)
+	public function __construct(EntityManager $em, UrlGeneratorInterface $urlGenerator, TokenStorageInterface $token_storage)
 	{
         $this->urlGenerator = $urlGenerator;
 
-        $this->context = $context;
+        $this->token_storage = $token_storage;
 
-		$this->siteManager = $siteManager;
+
 		$this->em = $em;
 		$this->baseHost = "totalblu.com";
 	}
@@ -63,14 +63,13 @@ class CurrentSiteListener
                 ->findOneBy(array('companyName' => $subdomain))
         ;
 
-		if ( $subdomain === 'totalblu.com' ) {
-            return;
-		}
-
         $reservedSubdomains = array(
             'totalblu.com', 'login'
         );
 
+        //     $user = $this->get('security.token_storage')->getToken()->getUser();
+        // var_dump($user);
+        // die();
 
         if ( in_array($subdomain, $reservedSubdomains) ){
             return;
@@ -90,24 +89,22 @@ class CurrentSiteListener
         * Check if user is authorised
         * to access the site
         */
-        var_dump($this->context);
-        //$user = $this->get('security.token_storage')->getToken()->getUser();
-       
-        $isAuth = 
-        $this->em->getRepository('AppBundle:Company')
-        ->findBy( array('companyName' => $subdomain, 'companyUser' => $user) );
 
 
-        if ( $isAuth ){
-            var_dump(true);
-        } else {
-            var_dump(false);
-        }
+        // $isAuth = 
+        // $this->em->getRepository('AppBundle:Company')
+        // ->findBy( array('companyName' => $subdomain, 'companyUser' => $user) );
+
+
+        // if ( $isAuth ){
+        //     var_dump(true);
+        // } else {
+        //     var_dump(false);
+        // }
 
             //   $response = new RedirectResponse($this->urlGenerator->generate('login'));
             // $event->setResponse($response);
-        $siteManager = $this->siteManager;
-        $siteManager->setCurrentSite($site);
+ 
 
         // var_dump($siteManager->getCurrentSite());
 	}
