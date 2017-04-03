@@ -10,9 +10,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Controller\TokenAuthenticatedController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class DashboardController extends Controller
+class DashboardController extends Controller implemenents TokenAuthenticatedController
 {
 
     private $host;
@@ -57,11 +58,6 @@ class DashboardController extends Controller
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $host = $request->server->get('HTTP_HOST');
         $subdomain = str_replace('.totalblu.com', '', $host);
-
-        //Check the user is logged in, redirect to login if not.
-        if ( $user === "anon."){
-            return "anon";
-        }
 
         //Check company exists
         $siteExists = 

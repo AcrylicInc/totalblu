@@ -7,7 +7,9 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-
+    tokens:
+        client1: pass1
+        client2: pass2
 framework:
     #esi:             ~
     #translator:      { fallbacks: ["%locale%"] }
