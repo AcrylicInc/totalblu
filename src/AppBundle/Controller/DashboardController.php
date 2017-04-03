@@ -5,15 +5,16 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Company;
 
 use Doctrine\ORM\EntityManager;
-use Symfony\Component\HttpFoundation\Request;
+//use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use AppBundle\Controller\TokenAuthenticatedController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class DashboardController extends Controller implemenents TokenAuthenticatedController
+use AppBundle\Controller\TokenAuthenticatedController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class DashboardController extends Controller implements TokenAuthenticatedController
 {
 
     private $host;
@@ -30,7 +31,7 @@ class DashboardController extends Controller implemenents TokenAuthenticatedCont
     
         $this->em = $this->getDoctrine()->getManager();
 
-       $status = $this->userAuthorized($request);
+       //$status = $this->userAuthorized($request);
 
            switch ($status) {
                 case 'anon':

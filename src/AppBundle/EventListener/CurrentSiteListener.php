@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\EventListener;
+#namespace AppBundle\EventListener;
 
 use AppBundle\Site\SiteManager;
 use Doctrine\ORM\EntityManager;

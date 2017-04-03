@@ -6,10 +6,11 @@ parameters:
 services:
     app.tokens.action_listener:
         class: AppBundle\EventListener\TokenListener
-        arguments: ['%tokens%']
+        arguments: ['@doctrine.orm.default_entity_manager', '@security.token_storage', '%tokens%']
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse}
+
+          #  - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse}
     # check_user_authorized:
     #     class: AppBundle\Dashboard
     #     arguments: ["@request_stack"]
