@@ -4,19 +4,18 @@
 namespace AppBundle\EventListener;
 
 use AppBundle\Entity\User;
+use AppBundle\Entity\Company;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+// use Doctrine\ORM\Event\LifecycleEventArgs;
 
 use AppBundle\Controller\TokenAuthenticatedController;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 /**
@@ -28,93 +27,63 @@ class TokenListener
 {
 	
 	private $em;
-	private $tokens;
 	private $token_storage;
 	private $entity;
 	private $request;
+	private $user;
+	protected $reservedSubdomains;
 
-	public function __construct(EntityManager $em, UserInterface $user, $tokens)
+	public function __construct(EntityManager $em, TokenStorageInterface $token_storage)
 	{
 		$this->em = $em;
-
-		$this->tokens = $tokens;
-
 		$this->token_storage = $token_storage;
-
 		$this->request = Request::createFromGlobals();
+		$this->reservedSubdomains = array(
+	            'totalblu.com', 'login'
+	    );
 
-		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
-        throw $this->createAccessDeniedException();
-    }
-    $user = $this->get('security.token_storage')->getToken()->getUser();
-
+		if ( null !== $this->token_storage->getToken() ){
+    		$this->user = $this->token_storage->getToken()->getUser();
+		} else {
+			return;
+		}
 	}
 
 	public function onKernelController(FilterControllerEvent $event)
 	{
-		$controller = $event->getController();
-
-		/**
-		* $controller passed can be either a class * or a closure. It's not common in 
-		* Symfony. If it's a class, it comes in an * array format.
+		/*
+		* $controller passed can be either a class or a Closure.
+		* This is not usual in Symfony but it may happen.
+		* If it is a class, it comes in array format
 		*/
-		if ( !is_array($controller)) {
-			return;
-		}
+
+		$controller = $event->getController();
+        if (!is_array($controller)) {
+            return;
+        }
+
+        if ($controller[0] instanceof TokenAuthenticatedController) {
+			
+			$host = $this->request->server->get('HTTP_HOST');
+	        $subdomain = str_replace('.totalblu.com', '', $host);
 
 
-		// echo "<pre>";
-		// var_dump( $this->request->server->get('HTTP_HOST') );
-		// echo "</pre>";
-
-		$host = $this->request->server->get('HTTP_HOST');
-        $subdomain = str_replace('.totalblu.com', '', $host);
-
-		//$user = $this->entity->setCreatedBy($this->token_storage->getToken()->getUsername());
-
-	        // Check the site exists.
+	        // Check the company profile exists.
 	        $site = $this->em
 	                ->getRepository('AppBundle:Company')
 	                ->findOneBy(array('companyName' => $subdomain))
 	        ;
+	        if ( null == $site )
+	        	throw new NotFoundHttpException('Site does not exist!'); 
+	     
+	       
 
-	        $reservedSubdomains = array(
-	            'totalblu.com', 'login'
-	        );
-
-	        if ( in_array($subdomain, $reservedSubdomains) ){
-	            return;
-	        }
-
-	        $isAuth = 
-	        $this->em->getRepository('AppBundle:Company')
-	        ->findBy( array('companyName' => $subdomain, 'companyUser' => $user) );
-
-
-
-		// if ( $controller[0] instanceof TokenAuthenticatedController){
-		// 	$token = $event->getRequest()->query->get('token');
-
-		// 	if ( !in_array($token, $this->tokens)) {
-		// 		throw new AccessDeniedHttpException('This action needs a valid token!');
-		// 	}
-
-		// 	$event->getRequest()->attributes->set('auth_token', $token);
-		// }
+	        //Check the use has permission to view company profile
+	        $isAuth = $this->em->getRepository('AppBundle:Company')
+	        		  ->findBy( array('companyName' => $subdomain, 'user' => $this->user->getId()) )
+	        ;
+			if ( null == $isAuth )
+	        	throw new NotFoundHttpException('You cannot access this page!'); 
+		}
 	}
-	
-
-	// public function onKernelResponse(FilterResponseEvent $events)
-	// {
-
-	// 	if ( !$token = $event->getRequest() ->attributes->get('auth_token')) {
-	// 		return;
-	// 	}
-
-	// 	$response = $event->getResponse();
-
-	// 	// Create a has and set it as a response header
-	// 	$hash = sha1($response->getContent().$token);
-	// 	$response->headers->set('X-CONTENT-HASH', $hash);
-	// }
 }
