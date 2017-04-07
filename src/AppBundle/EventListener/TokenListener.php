@@ -73,15 +73,16 @@ class TokenListener
 	                ->getRepository('AppBundle:Company')
 	                ->findOneBy(array('companyName' => $subdomain))
 	        ;
+
 	        if ( null == $site )
 	        	throw new NotFoundHttpException('Site does not exist!'); 
-	     
-	       
+
 
 	        //Check the use has permission to view company profile
 	        $isAuth = $this->em->getRepository('AppBundle:Company')
 	        		  ->findBy( array('companyName' => $subdomain, 'user' => $this->user->getId()) )
 	        ;
+	        
 			if ( null == $isAuth )
 	        	throw new NotFoundHttpException('You cannot access this page!'); 
 		}

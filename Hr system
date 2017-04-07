@@ -59,3 +59,24 @@ http://symfony.com/doc/current/controller/error_pages.html#custom-exception-cont
 
 
 	 http://symfony.com/doc/current/event_dispatcher/before_after_filters.html
+
+	 
+Site
+http://totalblu.com
+http://totalblu.com/about-us/
+http://totalblu.com/hr-services/{service}/
+http://totalblu.com/resources/{resource-type}/{resource-item} 
+http://totalblu.com/contact/
+http://totalblu.com/demo-our-system/
+
+
+System
+{company}.totalblu.com/
+{company}.totalblu.com/profile/{action}/{id}
+
+
+Manager
+
+
+http://totalblu.com
+http://totalblu.com

@@ -1,0 +1,16 @@
+{
+  "name": "totalblu",
+  "version": "1.0.0",
+  "description": "HR application developed by Akrylic Group",
+  "main": "index.jsx",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "webpack": "^2.3.3"
+  }
+},

@@ -36,7 +36,6 @@ class CurrentSiteListener
 
         $this->token_storage = $token_storage;
 
-
 		$this->em = $em;
 		$this->baseHost = "totalblu.com";
 	}
