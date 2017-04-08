@@ -1,16 +1,32 @@
-let nextTodoId = 0
-export const addTodo = (text) => ({
-  type: 'ADD_TODO',
-  id: nextTodoId++,
-  text
-})
+import * as PlayerActionTypes from './actionTypes';
 
-export const setVisibilityFilter = (filter) => ({
-  type: 'SET_VISIBILITY_FILTER',
-  filter
-})
+export const addPlayer = name => {
+  return {
+    type: PlayerActionTypes.ADD_PLAYER,
+    name
+  };
+};
 
-export const toggleTodo = (id) => ({
-  type: 'TOGGLE_TODO',
-  id
-})
+export const removePlayer = index => {
+  return {
+    type: PlayerActionTypes.REMOVE_PLAYER,
+    index
+  };
+};
+
+export const updatePlayerScore = (index, score)  => {
+   return {
+     type: PlayerActionTypes.UPDATE_PLAYER_SCORE,
+     index,
+     score
+  };
+};
+
+export const selectPlayer = index => {
+  return {
+    type: PlayerActionTypes.SELECT_PLAYER,
+    index
+  };
+};
+
+
