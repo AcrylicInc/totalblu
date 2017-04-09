@@ -4,24 +4,26 @@ import { render } from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 
+
+import store from './store';
 import routes from './router'; 
 
-// const Root = ({ store }) => (
-//   <Provider store={store}>
-//       routes
-//   </Provider>
-// );
+const Root = ({ store }) => (
+  <Provider store={store}>
+      routes
+  </Provider>
+);
 
-
-// render(
-//   <Root store={store} />,
-//   document.getElementById('app')
-// )
 
 render(
-  routes,
+  <Root store={store} />,
   document.getElementById('app')
 )
+
+// render(
+//   routes,
+//   document.getElementById('app')
+// )
 
 
 //https://medium.com/@alexmngn/how-to-better-organize-your-react-applications-2fd3ea1920f1
