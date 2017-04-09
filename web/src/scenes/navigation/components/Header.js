@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 
-const HeaderLink = props => (
+const HeaderLink = (props) => (
 	<NavLink {...props} activeClassName="active" />
 );
 
@@ -19,6 +19,7 @@ export default class Header extends Component {
 					<li><HeaderLink to="/app_dev.php/profile">profile</HeaderLink></li>
 				</ul>
 			</div>
+
 		);
 	}
 };

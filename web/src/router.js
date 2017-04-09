@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+
+import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route, browserHistory, IndexRedirect } from 'react-router-dom';
 
 import App from './containers/App';
@@ -6,7 +8,8 @@ import Home from './scenes/Home/Home';
 import Dashboard from './scenes/Dashboard/Dashboard';
 import Profile from './scenes/Profile/Profile';
 
-const routes = (
+const Root = ({ store }) => (
+  <Provider store={store}>
 	<Router history={browserHistory}>
 		<App> 
 			<Route exact={true} path="/app_dev.php/" component={Home} />
@@ -14,7 +17,12 @@ const routes = (
 			<Route exact={true} path="/app_dev.php/profile" component={Profile} />
 		</App>
 	</Router>
+  </Provider>
 );
+
+Root.propTypes = {
+  store: PropTypes.object.isRequired,
+};
 
 	// <Route exact={true} path="/parentlink" component={Dashboard} > 
 	// 	<IndexRedirect to={sublink} />
@@ -22,4 +30,4 @@ const routes = (
 	// <Route />
 
 
-export default routes;
+export default Root;
