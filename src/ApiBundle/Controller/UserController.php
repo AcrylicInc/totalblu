@@ -6,10 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use ApiBundle\JsonReturn;
 
-class CompanyUserController extends Controller
+class UserController extends Controller
 {
     /**
      * @Route("/api/user/current", name="api_user_current")
+     * @Route("/api/user/current/{id}")
      */
     public function currentUserAction(Request $request)
     {

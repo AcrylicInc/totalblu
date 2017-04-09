@@ -240,13 +240,14 @@ class User implements AdvancedUserInterface, \Serializable
     *   API Stuff
     */
 
-    public function getUserInfo()
+    public function getUserInfo($id = null)
+
     {
         return [
         'id'        => $this->getID(),
-        'firstname'        => $this->getFirstName(),
-        'lastname'        => $this->getLastName(),
-        'email'        => $this->getEmail(),
+        'firstname' => $this->getFirstName(),
+        'lastname' => $this->getLastName(),
+        'email'  => $this->getEmail(),
         ];
     }
 }

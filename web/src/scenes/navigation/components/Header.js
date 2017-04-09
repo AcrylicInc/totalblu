@@ -16,12 +16,12 @@ export default class Header extends Component {
 				<ul>
 					<li><HeaderLink to="/app_dev.php/">Home</HeaderLink></li>
 					<li><HeaderLink to="/app_dev.php/dashboard">dashboard</HeaderLink></li>
+					<li><HeaderLink to="/app_dev.php/profile">profile</HeaderLink></li>
 				</ul>
 			</div>
 		);
 	}
 };
-				// { this.props.children } 
 
 
 	
