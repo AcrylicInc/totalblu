@@ -1,6 +1,11 @@
 import * as Actions from './actionTypes';
 
 const initialState = {
+	meta: [
+		{
+			title: 'Dashboard',
+		}
+	],
 	header: [
 		{
 		name: 'Jim Hoskins',

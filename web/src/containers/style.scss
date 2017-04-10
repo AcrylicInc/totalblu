@@ -1,0 +1,14 @@
+body {
+	background: #edf0f9;
+	font-family: 'Roboto', sans-serif;
+	margin: 0;
+	padding: 0;
+	
+	p, a, span, div{
+		font-family: inherit;
+	}
+}
+
+* {
+	box-sizing: border-box;
+}

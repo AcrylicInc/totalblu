@@ -1,17 +1,18 @@
 import React, {Component, PropTypes} from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import * as ActionCreators from '../scenes/navigation/components/Header/actions';
-import Header from '../scenes/navigation/components/Header';
+import * as ActionCreators from '../components/navigation/components/Header/actions';
+import Header from '../components/navigation/components/Header/index';
 
-require('../scss/global/header/header.scss');
+require('./layout.scss');
+require('./style.scss');
 
 
 class App extends Component {
 
 	static propTypes = {
 		header: PropTypes.array.isRequired,
-		children: PropTypes.array.isRequired
+		children: PropTypes.array.isRequired,
 	};
 
 	render() {

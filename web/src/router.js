@@ -23,7 +23,14 @@ const Root = ({ store }) => (
 Root.propTypes = {
   store: PropTypes.object.isRequired,
 };
-
+	
+	// {['/app_dev.php/', '/app_dev.php/dashboard'].map(path => 
+	// 			<Route exact={true} path={path} component={Dashboard} >
+	// 				<IndexRedirect to='/app_dev.php/overview' />
+	// 				<Route path='/app_dev.php/overview' component={Home} />
+	// 			</Route>
+	// 		)}
+	
 	// <Route exact={true} path="/parentlink" component={Dashboard} > 
 	// 	<IndexRedirect to={sublink} />
 	// 	<Route path="sublink" component={sublink} />
