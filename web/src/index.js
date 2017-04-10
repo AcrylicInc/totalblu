@@ -12,7 +12,7 @@ import Root from './router';
 
 const store = createStore(
 	reducers,
-  window.devToolsExtension && window.devToolsExtension()
+	window.devToolsExtension && window.devToolsExtension()
 )
 
 render(

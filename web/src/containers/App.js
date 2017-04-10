@@ -4,6 +4,9 @@ import {connect} from 'react-redux';
 import * as ActionCreators from '../scenes/navigation/components/Header/actions';
 import Header from '../scenes/navigation/components/Header';
 
+require('../scss/global/header/header.scss');
+
+
 class App extends Component {
 
 	static propTypes = {

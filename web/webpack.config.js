@@ -1,10 +1,15 @@
 var webpack = require('webpack');
 var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 
 var BUILD_DIR = path.resolve(__dirname);
 var APP_DIR = path.resolve(__dirname);
 
-var plugins = [];
+var plugins = [
+ new ExtractTextPlugin({ filename: 'assets/css/style.css', disable: false, allChunks: true })
+];
+
 
   // plugins.push(
   //   new webpack.optimize.UglifyJsPlugin(),
@@ -40,7 +45,11 @@ var config = {
         exclude: /node_modules/,
   			loader: 'babel-loader',
         query: { presets: ["react", "es2015", "stage-0"] }
-  		}
+  		},
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract('css-loader!sass-loader') 
+      },
   	]
   },
   plugins: plugins
