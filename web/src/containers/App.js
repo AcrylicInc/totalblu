@@ -1,7 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import * as ActionCreators from '../components/navigation/components/Header/actions';
+import * as ActionCreators from '../components/navigation/components/Navigation/actions';
 import Navigation from '../components/navigation/components/Navigation/index';
 import Sidebar from '../components/navigation/components/Sidebar/index';
 
@@ -37,7 +37,7 @@ class App extends Component {
 
 const mapStateToProps = state => (
 	{
-		header: state.header,
+		navigation: state.navigation,
 	}
 );
 

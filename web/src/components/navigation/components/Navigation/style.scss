@@ -1,3 +1,61 @@
 nav.navigation-top{
 	background: #FFFFFF;
+	margin-left: 80px;
+	padding: 20px;
+	width: calc( 100% - 80px);
+
+	h1{
+		color: #58a4f2;
+		font-weight: 300;
+		margin-bottom: 10px;
+	}
+
+	ul.navigation-links{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		li{
+			display: inline-block;
+		}
+
+
+		a{
+			position: relative;
+			color: #2d2e39;
+			text-decoration: none;
+			margin-right: 15px;
+
+			&.active{
+				
+				&::after{
+					content: "";
+					position: absolute;
+					width: 5px;
+					height: 5px;
+					border-radius: 10px;
+					background: #58a4f2;
+					bottom: -10px;
+					left: 50%;
+					margin-left: -2.5px;
+				}
+			}
+		}
+	}
+
+	.navigation-profile{
+		text-align: right;
+
+		a{
+			width: 63px;
+			height: 63px;
+			text-align: center;
+			background: #e9386e;
+			display: inline-block;
+			border-radius: 100px;
+			color: #fff;
+			font-size: 24px;
+    		padding: 15px;
+		}
+	}
 }

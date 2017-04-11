@@ -28,7 +28,7 @@ const initialState = {
 	],
 };
 
-export default function Header(state=initialState, action) {
+export default function Sidebar(state=initialState, action) {
 	switch ( action.type ){
 		case Actions.OPEN_MODAL:
 			return [

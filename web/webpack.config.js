@@ -7,7 +7,7 @@ var BUILD_DIR = path.resolve(__dirname);
 var APP_DIR = path.resolve(__dirname);
 
 var plugins = [
- new ExtractTextPlugin({ filename: 'assets/css/style.css', disable: false, allChunks: true })
+  new ExtractTextPlugin({ filename: 'assets/css/style.css', disable: false, allChunks: true })
 ];
 
 
@@ -29,7 +29,7 @@ var plugins = [
       }
     })
   );
-  
+
 var config = {
   entry: APP_DIR + '/src/index.js',
   target: 'node',
@@ -42,17 +42,27 @@ var config = {
   		{
   			test: /\.jsx?/,
   			include: APP_DIR,
-        exclude: /node_modules/,
+        exclude: '/node_modules/',
   			loader: 'babel-loader',
         query: { presets: ["react", "es2015", "stage-0"] }
   		},
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css-loader!sass-loader') 
+        exclude: [/node_modules/, /src\/containers\/mixins.scss$/],
+        loader: ExtractTextPlugin.extract('css-loader!sass-loader')
       },
   	]
   },
-  plugins: plugins
+  plugins: plugins,
 };
+
+
+      // {
+      //   loader: 'sass-resources-loader',
+      //   options: {
+      //     // Provide path to the file with resources
+      //     resources: ExtractTextPlugin({ filename: './src/containers/mixins.scss', disable: false, allChunks: true }),
+      //   },
+      // },
 
 module.exports = config;

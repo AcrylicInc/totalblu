@@ -6,7 +6,7 @@ const initialState = {
 			title: 'Dashboard',
 		}
 	],
-	header: [
+	navigation: [
 		{
 		name: 'Jim Hoskins',
 		  score: 31,
@@ -28,7 +28,7 @@ const initialState = {
 	],
 };
 
-export default function Header(state=initialState, action) {
+export default function Navigation(state=initialState, action) {
 	switch ( action.type ){
 		case Actions.OPEN_MODAL:
 			return [
