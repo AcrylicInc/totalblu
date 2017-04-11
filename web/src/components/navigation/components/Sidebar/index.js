@@ -8,14 +8,14 @@ const HeaderLink = (props) => (
 	<NavLink {...props} activeClassName="active" />
 );
 
-export default class Header extends Component {
+export default class Sidebar extends Component {
 	constructor(props) {
 		super(props);
 	}
 
 	render() {
 		return (
-			<nav className="navigation-top">
+			<nav className="sidebar">
 				<div className="navigation-page">
 					<h1>Dashboard</h1>
 				</div>
