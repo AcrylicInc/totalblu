@@ -17,9 +17,9 @@ export default class Sidebar extends Component {
 		return (
 			<nav className="sidebar">
 				<ul className="sidebar-links">
-					<li><HeaderLink to="/app_dev.php/"></HeaderLink></li>
-					<li><HeaderLink to="/app_dev.php/dashboard"></HeaderLink></li>
-					<li><HeaderLink to="/app_dev.php/profile"></HeaderLink></li>
+					<li><HeaderLink to="/app_dev.php/">DB</HeaderLink></li>
+					<li><HeaderLink to="/app_dev.php/talent-acquisition">TA</HeaderLink></li>
+					<li><HeaderLink to="/app_dev.php/profile">PM</HeaderLink></li>
 				</ul>
 			</nav>
 

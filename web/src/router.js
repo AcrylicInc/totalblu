@@ -12,6 +12,11 @@ const Root = ({ store }) => (
   <Provider store={store}>
 	<Router history={browserHistory}>
 		<App> 
+			<Route exact={true} path="/dashboard/" component={Dashboard}> 
+				<Route exact={true} path="/dashboard/" component={Dashboard} />
+				<Route exact={true} path="/dashboard/overview/" component={Dashboard} />
+			</Route>
+
 			<Route exact={true} path="/app_dev.php/" component={Home} />
 			<Route exact={true} path="/app_dev.php/dashboard" component={Dashboard} />
 			<Route exact={true} path="/app_dev.php/profile" component={Profile} />

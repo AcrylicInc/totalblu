@@ -25,7 +25,9 @@ export default class Navigation extends Component {
 
 		return firstInitial+lastInitial;
 	}
-
+// <li><HeaderLink to="/app_dev.php/">Home</HeaderLink></li>
+// 							<li><HeaderLink to="/app_dev.php/dashboard">dashboard</HeaderLink></li>
+// 							<li><HeaderLink to="/app_dev.php/profile">profile</HeaderLink></li>
 	render() {
 		return (
 			<nav className="navigation-top">
@@ -35,9 +37,7 @@ export default class Navigation extends Component {
 							<h1>Dashboard</h1>
 						</div>
 						<ul className="navigation-links">
-							<li><HeaderLink to="/app_dev.php/">Home</HeaderLink></li>
-							<li><HeaderLink to="/app_dev.php/dashboard">dashboard</HeaderLink></li>
-							<li><HeaderLink to="/app_dev.php/profile">profile</HeaderLink></li>
+							
 						</ul>
 					</div>
 
