@@ -3,17 +3,24 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-import reducers from './components/navigation/components/Navigation/reducer';
+import reducer from './reducers';
 
 import App from './containers/App';
 
 //import store from './store';
 import Root from './router'; 
 
+// Grab the state from a global variable injected into the server-generated HTML
+// const preloadedState = window.__PRELOADED_STATE__
+// delete window.__PRELOADED_STATE__
+
+
 const store = createStore(
-	reducers,
+	reducer,
+	preloadedState,
 	window.devToolsExtension && window.devToolsExtension()
 )
+console.log(store.getState())
 
 render(
   <Root store={store} />,
