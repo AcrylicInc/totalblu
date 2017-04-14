@@ -42,6 +42,26 @@ class User implements AdvancedUserInterface, \Serializable
     private $roles = ['ROLE_MANAGER'];
 
     /**
+     * @ORM\Column(type="json_array")
+     */
+    private $managers = [];
+
+    /**
+     * @ORM\Column(type="json_array")
+     */
+    private $directReports = [];
+
+    /**
+     * @ORM\Column(type="string", length=25)
+     */
+    private $homeNumber;
+
+    /**
+     * @ORM\Column(type="string", length=25)
+     */
+    private $mobileNumber;
+
+    /**
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
@@ -179,6 +199,39 @@ class User implements AdvancedUserInterface, \Serializable
         $this->roles = $roles;
     }
 
+    public function getMobileNumber(){
+        return $this->mobileNumber;
+    }
+
+    public function setMobileNumber($mobileNumber){
+        $this->mobileNumber = $mobileNumber;
+    }
+
+    public function getHomeNumber(){
+        return $this->homeNumber;
+    }
+
+    public function setManagers( array $managers )
+    {
+        $this->managers = $managers;
+    }
+
+    public function getManagers() {
+        return $this->managers;
+    }
+
+    public function setHomeNumber($homeNumber){
+        $this->homeNumber = $homeNumber;
+    }
+
+    public function setAddress($address) {
+        $this->address = $address;
+    }
+
+    public function getAddress() {
+        return $this->homeAddress;
+    }
+
     public function eraseCredentials()
     {
     }
@@ -248,6 +301,8 @@ class User implements AdvancedUserInterface, \Serializable
         'firstname' => $this->getFirstName(),
         'lastname' => $this->getLastName(),
         'email'  => $this->getEmail(),
+        'homeNumber'  => $this->getHomeNumber(),
+        'mobileNumber'  => $this->getMobileNumber(),
         ];
     }
 }

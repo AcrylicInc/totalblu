@@ -6,7 +6,7 @@ export default class Profile extends Component {
 	render() {
 		return (
 			<div className="col-lg-3">
-				<profileSidebar />
+				<ProfileSidebar />
 			</div>
 		);
 	}

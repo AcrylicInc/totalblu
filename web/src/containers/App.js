@@ -28,8 +28,9 @@ class App extends Component {
 					<Navigation 
 						openModal={openModal} />
 				</header>
-
-				{children}
+				<div className="wrapper">
+					{children}
+				</div>
 			</div>
 		);
 	}
