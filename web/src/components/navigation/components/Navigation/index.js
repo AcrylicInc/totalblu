@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 
-//import SubNav from './SubNav/index';
+import SubNav from '../SubNav';
 
 require('./style.scss');
 
@@ -38,6 +38,7 @@ export default class Navigation extends Component {
 						<div className="navigation-page">
 							<h1>Dashboard</h1>
 						</div>
+						<SubNav />
 						<ul className="navigation-links">
 						</ul>
 					</div>

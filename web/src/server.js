@@ -8,6 +8,7 @@ import App from './containers/App'
 
 import { renderToString } from 'react-dom/server'
 
+import Root from './router'; 
 
 const app = Express()
 const port = 3000
@@ -25,10 +26,9 @@ function handleRender(req, res) {
 
 	// Render the component to a string
 	const html = renderToString(
-		<Provider store={store}>
-		  <App />
-		</Provider>
+		<Root store={store} />
 	)
+  console.log('test', html);
 
 	  // Grab the initial state from our Redux store
 	  const preloadedState = store.getState()

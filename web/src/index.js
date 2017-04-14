@@ -11,8 +11,8 @@ import App from './containers/App';
 import Root from './router'; 
 
 // Grab the state from a global variable injected into the server-generated HTML
-// const preloadedState = window.__PRELOADED_STATE__
-// delete window.__PRELOADED_STATE__
+const preloadedState = window.__PRELOADED_STATE__
+delete window.__PRELOADED_STATE__
 
 
 const store = createStore(
@@ -20,7 +20,10 @@ const store = createStore(
 	preloadedState,
 	window.devToolsExtension && window.devToolsExtension()
 )
-console.log(store.getState())
+
+store.subscribe( () => {
+	console.log("storechange", store.getState());
+});
 
 render(
   <Root store={store} />,

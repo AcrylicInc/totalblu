@@ -2,7 +2,6 @@ var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-
 var BUILD_DIR = path.resolve(__dirname);
 var APP_DIR = path.resolve(__dirname);
 
@@ -40,11 +39,11 @@ var config = {
   module: {
   	loaders: [
   		{
-  			test: /\.jsx?/,
+  			test: /\.js?/,
   			include: APP_DIR,
         exclude: '/node_modules/',
   			loader: 'babel-loader',
-        query: { presets: ["react", "es2015", "stage-0"] }
+        query: { presets: ["es2015", "react", "stage-0"] }
   		},
       {
         test: /\.scss$/,

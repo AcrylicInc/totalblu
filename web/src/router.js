@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, browserHistory, IndexRedirect } from 'r
 import App from './containers/App';
 import Home from './scenes/Home/Home';
 import Dashboard from './scenes/Dashboard/Dashboard';
-import Profile from './scenes/Profile/Profile';
+import Profile from './scenes/Profile/';
 
 const Root = ({ store }) => (
   <Provider store={store}>
