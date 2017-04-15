@@ -23,4 +23,46 @@ class UserController extends Controller
             return JsonReturn::error('No currently logged in user.');
         }
     }
+
+    /**
+     * @Route("/api/user/{id}/")
+     */
+    public function selectUserAction($id)
+    {
+      $qb = $this->getDoctrine()
+            ->getManager()
+            ->createQueryBuilder();
+
+        $qb
+            ->select(
+                'partial u.{id, firstName, lastName, emailAddress}'
+            )
+            ->from('AppBundle:User', 'u')
+            ->where('u.id = :id')
+            ->setParameter('id', $id);
+
+        $user = $qb->getQuery()
+            ->getArrayResult();
+
+        if ($user) {
+            return JsonReturn::success($user);
+        }
+
+        return JsonReturn::error("No user found.");
+    }
+
+    /**
+     * @Route("/api/user/{id}/managers/", name="api_user_current")
+     */
+    public function getUserManagersAction(Request $request)
+    {
+        if ($user = $this->getUser()) {
+
+            return JsonReturn::success($user->getUserInfo());
+        }
+        else {
+
+            return JsonReturn::error('No currently logged in user.');
+        }
+    }
 }

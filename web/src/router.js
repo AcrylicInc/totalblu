@@ -10,16 +10,23 @@ import Dashboard from './scenes/Dashboard/Dashboard';
 
 import Profile from './scenes/Profile/';
 import PersonalDetails from './scenes/Profile/components/ProfilePanel/components/PersonalDetails';
+import WorkDetails from './scenes/Profile/components/ProfilePanel/components/WorkDetails';
+import Education from './scenes/Profile/components/ProfilePanel/components/Education';
 
 const Root = ({ store }) => (
   <Provider store={store}>
 	<Router history={browserHistory}>
 		<App> 
 			<Route exact={true} path="/app_dev.php/dashboard/" component={Dashboard}> 
+				<Route path='overview' component={Home} />
 			</Route>
 
-			<Route exact={true} path="/app_dev.php/profile" component={Profile} /> 
-			<Route path="/app_dev.php/profile/personal-details/" component={PersonalDetails} />
+			<Profile>
+				<Route exact={true} path="/app_dev.php/profile/" component={PersonalDetails} />
+				<Route path='/app_dev.php/profile/personal-details/' component={PersonalDetails} />
+				<Route path='/app_dev.php/profile/work-details/' component={WorkDetails} />
+				<Route path='/app_dev.php/profile/education/' component={Education} />
+			</Profile>
 
 		</App>
 	</Router>

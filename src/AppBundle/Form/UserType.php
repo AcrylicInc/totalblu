@@ -22,7 +22,7 @@ class UserType extends AbstractType
         $builder
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
-            ->add('email', EmailType::class)
+            ->add('emailAddress', EmailType::class)
             ->add('termsAccepted', CheckboxType::class, array(
                 'mapped' => false,
                 'constraints' => new IsTrue(),

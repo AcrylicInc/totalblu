@@ -28,7 +28,7 @@ class App extends Component {
 					<Navigation 
 						openModal={openModal} />
 				</header>
-				{children}
+				{this.props.children}
 			</div>
 		);
 	}

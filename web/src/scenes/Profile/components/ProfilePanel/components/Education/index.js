@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 // require('./style.scss');
 
-export default class PersonalDetails extends Component {
+export default class Education extends Component {
 	constructor(props) {
 		super(props);
 
@@ -10,7 +10,7 @@ export default class PersonalDetails extends Component {
 
 	render() {
 		return (
-			<div>PersonalDetailspersonaldetailspePersonalDetailspersonaldetailspe</div>
+			<div>EDUCIATIONEDUCIATIONEDUCIATIONEDUCIATIONEDUCIATION</div>
 		);
 	}
 };

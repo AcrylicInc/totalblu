@@ -12,13 +12,14 @@ const HeaderLink = (props) => (
 export default class ProfilePanel extends Component {
 	constructor(props) {
 		super(props);
+	console.log(this.props);
 
 	}
 
 
 	render() {
 		return (
-			<aside className="profile-panel block">
+			<div className="profile-panel block">
 				<div className="profile-meta block-wrapper">
 					<div className="row">
 						<div className="col-lg-1">
@@ -37,10 +38,9 @@ export default class ProfilePanel extends Component {
 							<li><HeaderLink to="/app_dev.php/profile/emerancy/">Emergancy</HeaderLink></li>
 							<li><HeaderLink to="/app_dev.php/profile/leave-and-absence/">Leave & Absence</HeaderLink></li>
 						</ul>
-						{this.props.children}
 					</div>
 				</div>
-			</aside>
+			</div>
 		);
 	}
 };

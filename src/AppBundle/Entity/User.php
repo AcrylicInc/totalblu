@@ -95,7 +95,7 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=60, unique=true)
      */
-    private $email;
+    private $emailAddress;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Company")
@@ -134,14 +134,14 @@ class User implements AdvancedUserInterface, \Serializable
         $this->company = $company;
     }
 
-    public function getEmail()
+    public function getEmailAddress()
     {
-        return $this->email;
+        return $this->emailAddress;
     }
 
-    public function setEmail($email)
+    public function setEmailAddress($emailAddress)
     {
-        $this->email = $email;
+        $this->emailAddress = $emailAddress;
     }
 
     public function getFirstName()
@@ -171,7 +171,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function getUsername()
     {
-        return $this->email;
+        return $this->emailAddress;
     }
 
     public function setUsername($username)
@@ -352,9 +352,9 @@ class User implements AdvancedUserInterface, \Serializable
     {
         return [
         'id'        => $this->getID(),
-        'firstname' => $this->getFirstName(),
-        'lastname' => $this->getLastName(),
-        'email'  => $this->getEmail(),
+        'firstName' => $this->getFirstName(),
+        'lastName' => $this->getLastName(),
+        'emailAddress'  => $this->getEmailAddress(),
         'homeNumber'  => $this->getHomeNumber(),
         'mobileNumber'  => $this->getMobileNumber(),
         ];
