@@ -24,6 +24,7 @@ class ProfileController extends Controller implements TokenAuthenticatedControll
      * Matches /profile exactly
      *
      * @Route("/profile", name="profile")
+     * @Route("/profile/personal-details/", name="profile-details")
      */
     public function dashboardAction(Request $request)
     {

@@ -62,6 +62,26 @@ class User implements AdvancedUserInterface, \Serializable
     private $mobileNumber;
 
     /**
+     * @ORM\Column(type="string", length=25)
+    */
+    private $address;
+
+    /**
+     * @ORM\Column(type="string", length=25)
+    */
+    private $city;
+
+    /**
+     * @ORM\Column(type="string", length=25)
+    */
+    private $county;
+
+    /**
+     * @ORM\Column(type="string", length=25)
+    */
+    private $postCode;
+
+    /**
      * @Assert\NotBlank()
      * @Assert\Length(max=4096)
      */
@@ -203,12 +223,23 @@ class User implements AdvancedUserInterface, \Serializable
         return $this->mobileNumber;
     }
 
-    public function setMobileNumber($mobileNumber){
+    public function setMobileNumber($mobileNumber)
+    {
         $this->mobileNumber = $mobileNumber;
     }
 
-    public function getHomeNumber(){
+    public function getHomeNumber()
+    {
         return $this->homeNumber;
+    }
+
+    public function setHomeNumber($homeNumber)
+    {
+        $this->homeNumber = $homeNumber;
+    }
+
+    public function getManagers() {
+        return $this->managers;
     }
 
     public function setManagers( array $managers )
@@ -216,20 +247,43 @@ class User implements AdvancedUserInterface, \Serializable
         $this->managers = $managers;
     }
 
-    public function getManagers() {
-        return $this->managers;
+    public function getCity()
+    {
+        return $this->city;
     }
 
-    public function setHomeNumber($homeNumber){
-        $this->homeNumber = $homeNumber;
+    public function setCity($city)
+    {
+        $this->city = $city;
     }
 
-    public function setAddress($address) {
-        $this->address = $address;
+    public function getCounty()
+    {
+        return $this->county;
     }
 
-    public function getAddress() {
+    public function setCounty($county)
+    {
+        $this->county = $county;
+    }
+
+    public function getPostCode() {
+        return $this->postCode;
+    }
+
+    public function setPostCode($postCode)
+    {
+        $this->postCode = $postCode;
+    }
+
+    public function getAddress()
+    {
         return $this->homeAddress;
+    }
+
+    public function setAddress($address)
+    {
+        $this->address = $address;
     }
 
     public function eraseCredentials()

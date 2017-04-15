@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 
 import SubNav from '../SubNav';
+import ProfileAvatar from 'components/profileAvatar';
 
 require('./style.scss');
 
@@ -44,11 +45,7 @@ export default class Navigation extends Component {
 					</div>
 
 					<div className="col-lg-1">
-						<div className="navigation-profile">
-							<a href="/profile">
-								<span>{this.getProfileInitials()}</span>
-							</a>
-						</div>
+						<ProfileAvatar />
 					</div>
 				</div>
 			</nav>

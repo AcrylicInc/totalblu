@@ -36,6 +36,12 @@ var config = {
     path: BUILD_DIR,
     filename: 'bundle.js',
   },
+  resolve: {
+    modules: [
+      path.resolve('./src'),
+      path.resolve('./node_modules')
+    ]
+  },
   module: {
   	loaders: [
   		{

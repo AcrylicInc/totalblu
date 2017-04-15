@@ -20,3 +20,18 @@ a{
 	box-sizing: border-box;
 	outline: none;
 }
+
+.app-container{
+	padding: 40px 40px 40px 120px;
+	width: 100%;
+}
+
+.block{
+	background: #ffffff;
+	border-radius: 5px;
+	box-shadow: 0 0 5px rgba(152, 152, 152, 0.1);
+
+	.block-wrapper{
+		padding: 30px;
+	}
+}

@@ -1,3 +1,16 @@
+.profile-avatar a {
+  width: 63px;
+  height: 63px;
+  text-align: center;
+  background: #e9386e;
+  display: inline-block;
+  border-radius: 100px;
+  color: #fff;
+  font-size: 24px;
+  padding: 15px; }
+
+nav .profile-avatar {
+  text-align: right; }
 nav.navigation-top {
   background: #FFFFFF;
   margin-left: 80px;
@@ -28,18 +41,6 @@ nav.navigation-top {
         bottom: -10px;
         left: 50%;
         margin-left: -2.5px; }
-  nav.navigation-top .navigation-profile {
-    text-align: right; }
-    nav.navigation-top .navigation-profile a {
-      width: 63px;
-      height: 63px;
-      text-align: center;
-      background: #e9386e;
-      display: inline-block;
-      border-radius: 100px;
-      color: #fff;
-      font-size: 24px;
-      padding: 15px; }
 nav.sidebar {
   width: 80px;
   position: fixed;
@@ -2101,3 +2102,23 @@ a {
 * {
   box-sizing: border-box;
   outline: none; }
+
+.app-container {
+  padding: 40px 40px 40px 120px;
+  width: 100%; }
+
+.block {
+  background: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(152, 152, 152, 0.1); }
+  .block .block-wrapper {
+    padding: 30px; }
+.profile-links {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0; }
+  .profile-links li {
+    display: inline-block;
+    margin-right: 15px; }
+    .profile-links li a {
+      color: #58a4f2; }

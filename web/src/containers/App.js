@@ -1,5 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router'
 import {connect} from 'react-redux';
 import * as ActionCreators from '../components/navigation/components/Navigation/actions';
 import Navigation from '../components/navigation/components/Navigation/index';
@@ -12,7 +13,6 @@ require('./style.scss');
 class App extends Component {
 
 	static propTypes = {
-		navigation: PropTypes.array.isRequired,
 		children: PropTypes.array.isRequired,
 	};
 
@@ -28,9 +28,7 @@ class App extends Component {
 					<Navigation 
 						openModal={openModal} />
 				</header>
-				<div className="wrapper">
-					{children}
-				</div>
+				{children}
 			</div>
 		);
 	}
@@ -42,4 +40,4 @@ const mapStateToProps = state => (
 	}
 );
 
-export default connect(mapStateToProps)(App);
+export default withRouter(connect(mapStateToProps)(App));
