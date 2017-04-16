@@ -37,13 +37,6 @@ class User implements AdvancedUserInterface, \Serializable
     private $username;
 
     /**
-     * Many users has Many managers.
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="id")
-     * @ORM\JoinColumn(name="id", referencedColumnName="id")
-     */
-    private $managers;
-
-    /**
      * @ORM\Column(type="json_array")
      */
     private $roles = ['ROLE_MANAGER'];
@@ -112,8 +105,6 @@ class User implements AdvancedUserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
-
-        $this->managers = new \Doctrine\Common\Collections\ArrayCollection();
 
     }
 
