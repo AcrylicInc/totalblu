@@ -17,16 +17,14 @@ const Root = ({ store }) => (
   <Provider store={store}>
 	<Router history={browserHistory}>
 		<App> 
-			<Route exact={true} path="/app_dev.php/dashboard/" component={Dashboard}> 
-				<Route path='overview' component={Home} />
-			</Route>
+			
+			<Route exact={true} path='/app_dev.php/dashboard/' component={Dashboard} />
 
-			<Profile>
-				<Route exact={true} path="/app_dev.php/profile/" component={PersonalDetails} />
-				<Route path='/app_dev.php/profile/personal-details/' component={PersonalDetails} />
-				<Route path='/app_dev.php/profile/work-details/' component={WorkDetails} />
-				<Route path='/app_dev.php/profile/education/' component={Education} />
-			</Profile>
+			<Route path='/app_dev.php/profile/' component={Profile}>
+				<Route path='/app_dev.php/profile/personal-details/' component={PersonalDetails}  />
+				<Route exact={true} path='/app_dev.php/profile/work-details' component={WorkDetails} />
+				<Route exact={true} path='/app_dev.php/profile/education' component={Education} />
+			</Route>
 
 		</App>
 	</Router>
@@ -36,18 +34,5 @@ const Root = ({ store }) => (
 Root.propTypes = {
   store: PropTypes.object.isRequired,
 };
-	
-	// {['/app_dev.php/', '/app_dev.php/dashboard'].map(path => 
-	// 			<Route exact={true} path={path} component={Dashboard} >
-	// 				<IndexRedirect to='/app_dev.php/overview' />
-	// 				<Route path='/app_dev.php/overview' component={Home} />
-	// 			</Route>
-	// 		)}
-	
-	// <Route exact={true} path="/parentlink" component={Dashboard} > 
-	// 	<IndexRedirect to={sublink} />
-	// 	<Route path="sublink" component={sublink} />
-	// <Route />
-
 
 export default Root;

@@ -15,6 +15,10 @@ class App extends Component {
 	static propTypes = {
 		children: PropTypes.array.isRequired,
 	};
+	constructor(props) {
+		super(props);
+
+	}
 
 	render() {
 		const { dispatch, navigation, children} = this.props;

@@ -37,19 +37,16 @@ class User implements AdvancedUserInterface, \Serializable
     private $username;
 
     /**
+     * Many users has Many managers.
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="id")
+     * @ORM\JoinColumn(name="id", referencedColumnName="id")
+     */
+    private $managers;
+
+    /**
      * @ORM\Column(type="json_array")
      */
     private $roles = ['ROLE_MANAGER'];
-
-    /**
-     * @ORM\Column(type="json_array")
-     */
-    private $managers = [];
-
-    /**
-     * @ORM\Column(type="json_array")
-     */
-    private $directReports = [];
 
     /**
      * @ORM\Column(type="string", length=25)
@@ -105,7 +102,8 @@ class User implements AdvancedUserInterface, \Serializable
 
 
     
-
+//http://stackoverflow.com/questions/25501698/one-to-many-relationship-on-the-same-table
+    
     /**
      * @ORM\Column(name="is_active", type="boolean")
      */
@@ -114,8 +112,9 @@ class User implements AdvancedUserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid(null, true));
+
+        $this->managers = new \Doctrine\Common\Collections\ArrayCollection();
+
     }
 
     public function getID()
@@ -236,15 +235,6 @@ class User implements AdvancedUserInterface, \Serializable
     public function setHomeNumber($homeNumber)
     {
         $this->homeNumber = $homeNumber;
-    }
-
-    public function getManagers() {
-        return $this->managers;
-    }
-
-    public function setManagers( array $managers )
-    {
-        $this->managers = $managers;
     }
 
     public function getCity()
