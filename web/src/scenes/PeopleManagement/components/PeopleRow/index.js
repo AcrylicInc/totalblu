@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Switch, browserHistory, IndexRedirect, 
 export default class ProfilePanel extends Component {
 	constructor(props) {
 		super(props);
+		console.log(props);
 	}
 
 	render() {
