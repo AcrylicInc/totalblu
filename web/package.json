@@ -5,14 +5,16 @@
   "main": "index.js",
   "dependencies": {
     "express": "^4.15.2",
+    "npm": "^4.5.0",
     "path": "^0.12.7",
     "qs": "^6.4.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
-    "react-prop-types": "^0.4.0",
-    "react-redux": "^5.0.3",
-    "react-router-dom": "^4.0.0",
-    "redux": "^3.6.0"
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-prop-types": "*",
+    "react-redux": "^5.0.4",
+    "react-router-dom": "^4.1.1",
+    "redux": "*",
+    "webpack": "^2.4.1"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",

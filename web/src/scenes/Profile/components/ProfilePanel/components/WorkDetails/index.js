@@ -8,6 +8,10 @@ export default class WorkDetails extends Component {
 
 	}
 
+	componentDidMount() {
+	    document.title = "Profile | Work Details";
+	}
+
 	render() {
 		return (
 			<div>WorkDetailsWorkDetailsWorkDetailsWorkDetailsWorkDetailsWorkDetails</div>

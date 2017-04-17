@@ -17,4 +17,13 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getUserManagers($id)
+    {
+        $test = $this->createQueryBuilder('u')
+		   ->find($id);
+
+            var_dump($test);
+            die();
+    }
 }

@@ -54,15 +54,31 @@ class UserController extends Controller
     /**
      * @Route("/api/user/{id}/managers/", name="api_user_current")
      */
-    public function getUserManagersAction(Request $request)
+    public function getUserManagersAction($id)
     {
-        if ($user = $this->getUser()) {
+        $em = $this->getDoctrine()
+            ->getManager();
 
-            return JsonReturn::success($user->getUserInfo());
-        }
-        else {
 
-            return JsonReturn::error('No currently logged in user.');
+        $qb = $em->createQueryBuilder()
+            ->select(
+                'u',
+                'um'
+            )
+            ->from('AppBundle:UserManagerRelationships', 'u')
+            ->leftJoin('AppBundle:User', 'um')
+            ->where('um.id = :id')
+            ->setParameter('id', $id);
+
+
+        $results = $qb->getQuery()
+            ->getArrayResult();
+
+
+        if ($results) {
+            return JsonReturn::success($results);
         }
+
+        return JsonReturn::error("No results found.");
     }
 }

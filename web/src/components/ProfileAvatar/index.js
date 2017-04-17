@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { NavLink } from 'react-router-dom';
 
 require('./style.scss');
 
@@ -9,21 +10,19 @@ export default class ProfileAvatar extends Component {
 
 	}
 	getProfileInitials() {
-		let profileMeta = {'name' : 'Ryan Thorp'};
-		let splitName = profileMeta.name.split(" ");
+		let profileMeta = this.props.userName.split(" ");
 
-		let firstInitial = splitName[0].charAt(0);
-		let lastInitial = splitName[splitName.length - 1].charAt(0);
-
-		return firstInitial+lastInitial;
+		let firstInitial = profileMeta[0].charAt(0);
+		let lastInitial = profileMeta[profileMeta.length - 1].charAt(0);
+		return (firstInitial+lastInitial);
 	}
 
 	render() {
 		return (
 			<div className="profile-avatar">
-				<a href="/profile">
+				<NavLink id="userViewProfile" to={`/app_dev.php/profile/${this.props.userId}`}>
 					<span>{this.getProfileInitials()}</span>
-				</a>
+				</NavLink>
 			</div>
 		);
 	}

@@ -8,6 +8,10 @@ export default class Education extends Component {
 
 	}
 
+	componentDidMount() {
+	    document.title = "Profile | Education";
+	}
+
 	render() {
 		return (
 			<div>EDUCIATIONEDUCIATIONEDUCIATIONEDUCIATIONEDUCIATION</div>

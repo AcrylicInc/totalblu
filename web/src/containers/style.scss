@@ -35,3 +35,29 @@ a{
 		padding: 30px;
 	}
 }
+
+
+/**
+ * Buttons
+*/
+
+.btn{
+	padding: 10px;
+    background: #58a4f2;
+    border-radius: 3px;
+    color: #ffffff;
+    display: inline-flex;
+    transition: background-color 0.2s ease;
+    
+    &:hover{
+    	background-color: #4d94de;
+    }
+}
+
+.btn-large{
+	padding: 15px 50px;
+}
+
+.btn-grey{
+
+}

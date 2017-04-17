@@ -1,6 +1,7 @@
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
+import { PropTypes } from 'react-prop-types';
 import { bindActionCreators } from 'redux';
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
 import {connect} from 'react-redux';
 import * as ActionCreators from '../components/navigation/components/Navigation/actions';
 import Navigation from '../components/navigation/components/Navigation/index';
@@ -12,9 +13,9 @@ require('./style.scss');
 
 class App extends Component {
 
-	static propTypes = {
-		children: PropTypes.array.isRequired,
-	};
+	// static propTypes = {
+	// 	children: PropTypes.array.isRequired,
+	// };
 	constructor(props) {
 		super(props);
 

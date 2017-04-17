@@ -7,7 +7,7 @@
   border-radius: 100px;
   color: #fff;
   font-size: 24px;
-  padding: 15px; }
+  padding: 15px 0; }
 
 nav .profile-avatar {
   text-align: right; }
@@ -2113,6 +2113,22 @@ a {
   box-shadow: 0 0 5px rgba(152, 152, 152, 0.1); }
   .block .block-wrapper {
     padding: 30px; }
+
+/**
+ * Buttons
+*/
+.btn {
+  padding: 10px;
+  background: #58a4f2;
+  border-radius: 3px;
+  color: #ffffff;
+  display: inline-flex;
+  transition: background-color 0.2s ease; }
+  .btn:hover {
+    background-color: #4d94de; }
+
+.btn-large {
+  padding: 15px 50px; }
 .profile-links {
   list-style: none;
   margin: 40px 0 0;
@@ -2122,3 +2138,9 @@ a {
     margin-right: 15px; }
     .profile-links li a {
       color: #58a4f2; }
+.profile-reports .profile-avatar {
+  margin: 20px 0 0; }
+  .profile-reports .profile-avatar a {
+    width: 53px;
+    height: 53px;
+    font-size: 18px; }
