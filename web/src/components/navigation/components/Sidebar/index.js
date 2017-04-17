@@ -19,7 +19,7 @@ export default class Sidebar extends Component {
 				<ul className="sidebar-links">
 					<li><HeaderLink to="/app_dev.php/dashboard">DB</HeaderLink></li>
 					<li><HeaderLink to="/app_dev.php/talent-acquisition">TA</HeaderLink></li>
-					<li><HeaderLink to="/app_dev.php/profile">PM</HeaderLink></li>
+					<li><HeaderLink to="/app_dev.php/people-management">PM</HeaderLink></li>
 				</ul>
 			</nav>
 
