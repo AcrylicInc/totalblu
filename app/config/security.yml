@@ -33,7 +33,8 @@ security:
             form_login:
                 login_path: login
                 check_path: login
-                use_referer: true
+                use_referer: false
+                success_handler: app.auth.success_handler
 
             
             logout:

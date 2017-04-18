@@ -10,6 +10,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
+    app.auth.success_handler:
+        class: AppBundle\EventListener\AuthListener
+        arguments: ['@router', '@security.token_storage', '@doctrine.orm.default_entity_manager']
+
           #  - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse}
     # check_user_authorized:
     #     class: AppBundle\Dashboard
