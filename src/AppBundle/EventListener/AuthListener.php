@@ -21,9 +21,8 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Routing\Router;
 
 /**
-* This class is called on
-* It requests the token before deciding to throw
-* an exception.
+* This class redirects users to their dashboard
+* after successful login
 */
 class AuthListener implements AuthenticationSuccessHandlerInterface
 {
@@ -45,15 +44,15 @@ class AuthListener implements AuthenticationSuccessHandlerInterface
 		if ( null === $this->token_storage->getToken() ) return;
 
     	$this->user = $this->token_storage->getToken()->getUser();
-		
+		$userId = $this->user->getID();
 
 		$userCompany = $this->em
-	                ->getRepository('AppBundle:Company');
+	                ->getRepository('AppBundle:Company')
 	    ;
 		
-		var_dump( $userCompany->getCompanyName() );
-		die();
+		$userCompany = $userCompany->findOneBy( array('user' => $userId ) )->getCompanyName();
 
-		// var_dump($this->token_storage->getToken()->getUser());
+		$response = new RedirectResponse( 'http://' . $userCompany . '.totalblu.com' . '/app_dev.php/' );
+        return $response;
 	}
 }

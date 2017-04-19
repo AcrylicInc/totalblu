@@ -29,7 +29,7 @@ security:
         
         main:
             anonymous: ~
-
+            
             form_login:
                 login_path: login
                 check_path: login
@@ -45,7 +45,7 @@ security:
         ROLE_MANAGER: [ROLE_USER, ROLE_ALLOWED_TO_SWITCH]
 
     access_control:
-        # - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: \/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/api/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^\/manage\b.+, roles: ROLE_MANAGER }
         # - { path: ^/, roles: ROLE_USER }
