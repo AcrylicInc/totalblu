@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
-import createFragment from 'react-addons-create-fragment'; // ES6
 
-import SubNav from '../SubNav';
+import { matchPath } from 'react-router'
+
 import ProfileAvatar from 'components/profileAvatar';
+import { BrowserRouter as Router, Route, Switch, browserHistory, IndexRedirect, IndexRoute } from 'react-router-dom';
+import PeopleManagement from 'scenes/PeopleManagement/';
 
 require('./style.scss');
 
@@ -15,119 +17,19 @@ const HeaderLink = (props) => (
 export default class Navigation extends Component {
 	constructor(props) {
 		super(props);
-
 	}
 
 	getProfileInitials() {
 		let profileMeta = {'name' : 'Ryan Thorp'};
 		let splitName = profileMeta.name.split(" ");
 
-		console.log(splitName);
-
 		let firstInitial = splitName[0].charAt(0);
 		let lastInitial = splitName[splitName.length - 1].charAt(0);
 
 		return firstInitial+lastInitial;
 	}
-	getSubNav(){
-		const subNavLinks = [
-			{
-				path: '/app_dev.php/dashboard',
-				links: [
-					{
-						text: 'Overview',
-						link: '/app_dev.php/dashboard'
-					}
-				]
-			},
-			{
-				path: '/app_dev.php/people-management',
-				links: [
-					{
-						text: 'People',
-						link: '/app_dev.php/people-management/people'
-					},
-					{
-						text: 'Departments',
-						link: '/app_dev.php/people-management/departments'
-					},
-					{
-						text: 'Offices',
-						link: '/app_dev.php/people-management/offices'
-					}
-				]
-			},
-			{
-				path: '/talent-acquisition',
-				links: [
-					{
-						text: 'Overview',
-						link: '/talent-acquisition'
-					}
-				]
-			}
-		];
 
-	const pageURL = window.location.href;
-
-	let subLinks = "";
-
-		subNavLinks.forEach( (subNavLink, index) => {
-
-			if ( !pageURL.indexOf( subNavLink.path ) >= 1 ) return false;
-				
-			subNavLink.links.forEach( (subNavlink, index) => {
-				let text = '"' + subNavLink.link + '"';
-				let link = <NavLink to={text} activeClassName="active">subNavLink.text</NavLink>;
-				console.log( createFragment(link));
-
-				subLinks += link;
-			});
-		});
-	console.log(subLinks);
-	return subLinks;
-
-	}
-	render() {
-
-		const subNav = [
-			{
-				path: '/app_dev.php',
-				links: [
-					{
-						text: 'Overview',
-						link: '/app_dev.php/dashboard'
-					}
-				]
-			},
-			{
-				path: '/app_dev.php/people-management',
-				links: [
-					{
-						text: 'People',
-						link: '/app_dev.php/people-management/people'
-					},
-					{
-						text: 'Departments',
-						link: '/app_dev.php/people-management/departments'
-					},
-					{
-						text: 'Offices',
-						link: '/app_dev.php/people-management/offices'
-					}
-				]
-			},
-			{
-				path: '/talent-acquisition',
-				links: [
-					{
-						text: 'Overview',
-						link: '/talent-acquisition'
-					}
-				]
-			}
-		];
-
+	render() {		
 		return (
 			<nav className="navigation-top">
 				<div className="row">
@@ -135,9 +37,23 @@ export default class Navigation extends Component {
 						<div className="navigation-page">
 							<h1>Dashboard</h1>
 						</div>
-						<SubNav />
 						<ul className="navigation-links">
-							{ this.getSubNav() }
+						{this.props.subNav.map((route, index) => (
+							<li>
+				          	<NavLink
+					            key={index +'navroute'}
+					            to={`${route.link}`}
+					            activeClassName="active" 
+				          	>{`${route.text}`}</NavLink>
+			
+				          	<Route
+					            key={index + 100}
+					            path={route.path}
+					            exact={route.exact}
+					            component={route.main}
+				         	/>
+				         	</li>
+				        ))}
 						</ul>
 					</div>
 
