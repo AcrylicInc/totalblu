@@ -44,15 +44,9 @@ export default class Navigation extends Component {
 					            key={index +'navroute'}
 					            to={`${route.link}`}
 					            activeClassName="active" 
+					            exact
 				          	>{`${route.text}`}</NavLink>
-			
-				          	<Route
-					            key={index + 100}
-					            path={route.path}
-					            exact={route.exact}
-					            component={route.main}
-				         	/>
-				         	</li>
+				          	</li>
 				        ))}
 						</ul>
 					</div>

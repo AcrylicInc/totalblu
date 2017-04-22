@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Switch, browserHistory, IndexRedirect, 
 // require('./style.scss');
 
 
-export default class ProfilePanel extends Component {
+export default class Offices extends Component {
 	constructor(props) {
 		super(props);
 		console.log(props);

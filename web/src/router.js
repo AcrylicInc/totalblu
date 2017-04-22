@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch, browserHistory, IndexRedirect, 
 import App from './containers/App';
 import Home from './scenes/Home/';
 import PeopleManagement from './scenes/PeopleManagement/';
+import People from './scenes/PeopleManagement/components/People';
 import Dashboard from './scenes/Dashboard/';
 
 import Profile from './scenes/Profile/';
@@ -17,7 +18,12 @@ const Root = ({ store }) => (
 		<App>
 
 			<Route exact={true} path='/app_dev.php/dashboard' component={Dashboard} />
-			<Route path='/app_dev.php/people-management' component={PeopleManagement} />
+			
+			<Route path='/app_dev.php/people-management' component={PeopleManagement} >
+
+			</Route>
+
+
 			<Route path='/app_dev.php/profile' component={Profile} />
 
 		</App>

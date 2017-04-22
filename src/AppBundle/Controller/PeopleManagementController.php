@@ -22,6 +22,9 @@ class PeopleManagementController extends Controller implements TokenAuthenticate
 
     /**
      * @Route("/people-management", name="people_management")
+     * @Route("/people-management/people", name="people_management_people")
+     * @Route("/people-management/departments", name="people_management_departments")
+     * @Route("/people-management/offices", name="people_management_offices")
      */
     public function dashboardAction(Request $request)
     {
