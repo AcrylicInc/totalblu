@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import ProfileAvatar from 'components/profileAvatar';
 import { BrowserRouter as Router, Route, Switch, browserHistory, IndexRedirect, IndexRoute } from 'react-router-dom';
 
-// require('./style.scss');
+require('./style.scss');
 
 
 export default class People extends Component {
@@ -49,22 +49,45 @@ export default class People extends Component {
 					"Office" : "Bedford",
 				}
 			],
+			search: "",
 	    };
 
 	}
-
+	searchChange( target ){
+		console.log(target);
+	}
 	render() {
 		return (
-			<div className="profile-panel block">
-				{ this.state.users.map( users => {
-					return ( 
-					<div className="profile-panel block"
-					key={users.id}
-					{...users} >
-						{users.name}
-					</div>						
-					)
-				})}
+			<div className="people-panel block">
+				<div className="row">
+					<div className="col-lg-2">
+
+					</div>
+					<div className="col-lg-10">
+						<div className="search">
+							 <form>
+								<label>Test</label>
+								<input type="text" value={this.state.search} onChange={this.searchChange()} />
+							</form>
+						</div>
+						{ this.state.users.map( users => {
+							return ( 
+							<div className="people-row row middle-lg"
+	 						key={users.id}
+							{...users} >
+								<ProfileAvatar 
+								userName={users.name} />
+								<div className="people-name">
+									{users.name}
+								</div>
+								<div className="people-job">
+									{users.jobTitle}
+								</div>
+							</div>						
+							)
+						})}
+					</div>
+				</div>
 			</div>
 		);
 	}

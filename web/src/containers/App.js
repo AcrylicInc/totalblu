@@ -4,9 +4,9 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import {connect} from 'react-redux';
 
-import * as ActionCreators from '../components/navigation/components/Navigation/actions';
+import * as ActionCreators from '../components/Navigation/actions';
 
-import Sidebar from '../components/navigation/components/Sidebar/index';
+import Sidebar from '../components/Sidebar/index';
 
 
 require('./layout.scss');
