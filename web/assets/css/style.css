@@ -2073,7 +2073,7 @@ a {
 
 /**
  * Buttons
-*/
+ */
 .btn {
   padding: 10px;
   background: #58a4f2;
@@ -2086,6 +2086,194 @@ a {
 
 .btn-large {
   padding: 15px 50px; }
+
+/**
+ * Common Component Classes 
+ */
+.outline-grey {
+  border: 1px solid #cccccc; }
+
+/**
+ * Common Form styles 
+ */
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0; }
+
+label {
+  display: block; }
+
+.Select {
+  position: relative; }
+  .Select.is-disabled > .Select-control {
+    background-color: #000000; }
+    .Select.is-disabled > .Select-control:hover {
+      box-shadow: none; }
+  .Select.is-disabled .Select-arrow-zone {
+    cursor: default;
+    pointer-events: none; }
+
+.Select-control {
+  background-color: #ffffff;
+  border-color: #d9d9d9 #cccccc #b3b3b3;
+  border-radius: 3px;
+  border: 1px solid #cccccc;
+  color: #cccccc;
+  cursor: default;
+  display: table;
+  border-spacing: 0;
+  border-collapse: separate;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  width: 100%; }
+  .Select-control:hover {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06); }
+  .Select-control .Select-input:focus {
+    outline: none; }
+
+.is-searchable.is-open > .Select-control {
+  cursor: text; }
+
+.is-open > .Select-control {
+  border-radius: 0 0 3px 3px;
+  background: #ffffff;
+  border-color: #b3b3b3 #cccccc #d9d9d9; }
+  .is-open > .Select-control .Select-arrow {
+    top: -2px;
+    border-color: transparent transparent #cccccc;
+    border-width: 5px 5px 5px; }
+
+.is-searchable.is-focused:not(.is-open) > .Select-control {
+  cursor: text; }
+
+.is-focused:not(.is-open) > .Select-control {
+  border-color: #cccccc #d9d9d9 #d9d9d9;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1), 0 0 5px -1px fade(#cccccc, 50%); }
+
+.Select-option {
+  width: 100%;
+  border: 1px solid #cccccc;
+  border-bottom: none; }
+  .Select-option:last-of-type {
+    border-bottom: 1px solid #cccccc; }
+
+.Select-placeholder,
+.Select--single > .Select-control .Select-value {
+  bottom: 0;
+  color: #cccccc;
+  left: 0;
+  line-height: 1.2;
+  position: absolute;
+  right: 0;
+  top: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+.has-value.Select--single > .Select-control .Select-value .Select-value-label,
+.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value .Select-value-label {
+  color: #cccccc; }
+
+.has-value.Select--single > .Select-control .Select-value a.Select-value-label,
+.has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label {
+  cursor: pointer;
+  text-decoration: none; }
+  .has-value.Select--single > .Select-control .Select-value a.Select-value-label:hover, .has-value.Select--single > .Select-control .Select-value a.Select-value-label:focus,
+  .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:hover,
+  .has-value.is-pseudo-focused.Select--single > .Select-control .Select-value a.Select-value-label:focus {
+    color: #cccccc;
+    outline: none;
+    text-decoration: underline; }
+
+.Select-input {
+  vertical-align: middle; }
+  .Select-input > input {
+    background: none transparent;
+    border: 0 none;
+    box-shadow: none;
+    cursor: default;
+    display: inline-block;
+    font-family: inherit;
+    font-size: inherit;
+    margin: 0;
+    outline: none;
+    line-height: 14px;
+    /* For IE 8 compatibility */
+    -webkit-appearance: none; }
+    .is-focused .Select-input > input {
+      cursor: text; }
+
+.has-value.is-pseudo-focused .Select-input {
+  opacity: 0; }
+
+.Select-control:not(.is-searchable) > .Select-input {
+  outline: none; }
+
+.Select-clear-zone {
+  color: #cccccc;
+  cursor: pointer;
+  display: table-cell;
+  position: relative;
+  text-align: center;
+  vertical-align: middle; }
+  .Select-clear-zone:hover {
+    color: #cccccc; }
+
+.Select-clear {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1; }
+
+.Select--multi .Select-clear-zone {
+  width: 100%; }
+
+.Select--multi .Select-multi-value-wrapper {
+  display: inline-block; }
+
+.Select .Select-aria-only {
+  display: inline-block;
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden; }
+
+.Select-arrow-zone {
+  cursor: pointer;
+  display: table-cell;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  width: 25px;
+  padding-right: 20px; }
+
+.Select-arrow {
+  border-color: #cccccc transparent transparent;
+  border-style: solid;
+  border-width: 5px 5px 5px;
+  display: inline-block;
+  height: 0;
+  width: 0;
+  position: relative; }
+
+.is-open .Select-arrow,
+.Select-arrow-zone:hover > .Select-arrow {
+  border-top-color: #ccccccc; }
+
+@-webkit-keyframes Select-animation-fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
+
+@keyframes Select-animation-fadeIn {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
 .profile-avatar a {
   width: 63px;
   height: 63px;
@@ -2129,12 +2317,16 @@ nav.navigation-top {
         bottom: -10px;
         left: 50%;
         margin-left: -2.5px; }
+.people-panel {
+  font-size: 14px; }
+
 .search {
   position: relative;
-  margin: 15px 20px; }
+  margin: 0 0 15px; }
+  .search form {
+    width: 100%; }
   .search input {
-    padding: 10px 20px 10px 60px;
-    border: 1px solid #cccccc;
+    padding: 10px 20px 10px 77px;
     width: 100%;
     display: block;
     height: 60px; }
@@ -2142,14 +2334,24 @@ nav.navigation-top {
     position: absolute;
     left: 20px;
     top: 19px; }
+    .search label::after {
+      content: "";
+      position: absolute;
+      right: -17px;
+      height: 36px;
+      width: 1px;
+      background: #cccccc;
+      top: -7px; }
+
+.controller {
+  padding: 10px 0;
+  margin: 15px 0; }
 
 .people-row {
-  border: 1px solid #cccccc;
   border-left: 5px solid #58a4f2;
   padding: 10px 20px;
-  margin: 15px 20px;
-  height: 60px;
-  font-size: 14px; }
+  margin: 15px 0;
+  height: 60px; }
   .people-row .profile-avatar a {
     font-size: 14px;
     width: 38px;
@@ -2164,8 +2366,23 @@ nav.navigation-top {
     margin-right: 0; }
     .people-row .people-link a {
       color: inherit; }
+  .people-row:last-of-type {
+    margin-bottom: 0; }
+
+.filters-siderbar {
+  height: 100%;
+  padding: 20px; }
+  .filters-siderbar .Select-input {
+    width: 100%; }
+  .filters-siderbar input {
+    width: 100% !important; }
+  .filters-siderbar label {
+    font-weight: bold;
+    margin-bottom: 10px; }
+  .filters-siderbar fieldset {
+    margin-bottom: 20px; }
 .people-panel {
-  padding: 15px 0; }
+  padding: 30px 20px; }
 .profile-links {
   list-style: none;
   margin: 40px 0 0;
