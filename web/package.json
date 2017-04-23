@@ -11,10 +11,12 @@
     "react": "^15.5.4",
     "react-addons-create-fragment": "^15.5.3",
     "react-dom": "^15.5.4",
+    "react-paginate": "^4.3.1",
     "react-prop-types": "*",
     "react-redux": "^5.0.4",
     "react-router-dom": "^4.1.1",
     "react-select": "^1.0.0-rc.3",
+    "react-ultimate-pagination": "^1.0.1",
     "redux": "*",
     "webpack": "^2.4.1"
   },
