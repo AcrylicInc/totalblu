@@ -12,6 +12,8 @@ import Offices from './components/Offices/';
 
 import * as ActionCreators from './actions';
 
+require('./style.scss');
+
 class PeopleManagement extends Component {
 	constructor(props) {
 		super(props);
@@ -57,18 +59,16 @@ class PeopleManagement extends Component {
 						subNav={ links } 
 					/>
 				</header>
-				<div className="app-container">
-					<div className="row">
-						<div className="col-lg-12">
-							{ links.map((route, index) => (
-					          	<Route
-						            key={index}
-						            path={route.link}
-						            exact
-						            component={route.main}
-					         	/>
-							))}
-						</div>
+				<div className="app-container row">
+					<div className="col-lg-12">
+						{ links.map((route, index) => (
+				          	<Route
+					            key={index}
+					            path={route.link}
+					            exact
+					            component={route.main}
+				         	/>
+						))}
 					</div>
 				</div>
 			</div>

@@ -14,6 +14,7 @@
     "react-prop-types": "*",
     "react-redux": "^5.0.4",
     "react-router-dom": "^4.1.1",
+    "react-select": "^1.0.0-rc.3",
     "redux": "*",
     "webpack": "^2.4.1"
   },

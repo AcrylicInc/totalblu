@@ -8,7 +8,6 @@ import * as ActionCreators from '../components/Navigation/actions';
 
 import Sidebar from '../components/Sidebar/index';
 
-
 require('./layout.scss');
 require('./style.scss');
 

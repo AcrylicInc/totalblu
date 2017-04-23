@@ -56,6 +56,11 @@ var config = {
         exclude: [/node_modules/, /src\/containers\/mixins.scss$/],
         loader: ExtractTextPlugin.extract('css-loader!sass-loader')
       },
+      {
+          test: /\.(eot|svg|ttf|woff|woff2)$/,
+          loader: 'file?name=assets/font/[name].[ext]'
+      },
+      
   	]
   },
   plugins: plugins,

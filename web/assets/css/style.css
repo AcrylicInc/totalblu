@@ -2130,16 +2130,26 @@ nav.navigation-top {
         left: 50%;
         margin-left: -2.5px; }
 .search {
+  position: relative;
   margin: 15px 20px; }
   .search input {
-    padding: 10px 20px;
-    border: 1px solid #cccccc; }
+    padding: 10px 20px 10px 60px;
+    border: 1px solid #cccccc;
+    width: 100%;
+    display: block;
+    height: 60px; }
+  .search label {
+    position: absolute;
+    left: 20px;
+    top: 19px; }
 
 .people-row {
   border: 1px solid #cccccc;
-  border-left: 3px solid #58a4f2;
+  border-left: 5px solid #58a4f2;
   padding: 10px 20px;
-  margin: 15px 20px; }
+  margin: 15px 20px;
+  height: 60px;
+  font-size: 14px; }
   .people-row .profile-avatar a {
     font-size: 14px;
     width: 38px;
@@ -2147,6 +2157,15 @@ nav.navigation-top {
     padding: 11px 0; }
   .people-row > div {
     margin-right: 15px; }
+  .people-row .people-name {
+    font-weight: bold; }
+  .people-row .people-link {
+    margin-left: auto;
+    margin-right: 0; }
+    .people-row .people-link a {
+      color: inherit; }
+.people-panel {
+  padding: 15px 0; }
 .profile-links {
   list-style: none;
   margin: 40px 0 0;

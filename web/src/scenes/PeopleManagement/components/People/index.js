@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
+import Select from 'react-select';
 
 import ProfileAvatar from 'components/profileAvatar';
 import { BrowserRouter as Router, Route, Switch, browserHistory, IndexRedirect, IndexRoute } from 'react-router-dom';
@@ -56,17 +57,62 @@ export default class People extends Component {
 	searchChange( target ){
 		console.log(target);
 	}
+	logChange(val){
+		console.log(val);
+	}
 	render() {
-		return (
-			<div className="people-panel block">
-				<div className="row">
-					<div className="col-lg-2">
 
+		const ShowOptions = [
+			{ value: 'all', label: 'All employees'},
+			{ value: 'managers', label: 'Managers'}
+		];
+
+		return (
+			<div className="people-panel block row">
+
+					<div className="col-lg-2">
+						<div className="filters-siderbar">
+							<form>
+								<label>Show</label>
+								<Select
+									name="form-field-name"
+									value="one"
+									options={ShowOptions}
+									onChange={this.logChange()}
+								/>
+
+								<label>Sort by</label>
+								<Select
+									name="form-field-name"
+									value="one"
+									options={ShowOptions}
+									onChange={this.logChange()}
+								/>
+
+								<label>Deparments</label>
+								<Select
+									name="form-field-name"
+									value="one"
+									options={ShowOptions}
+									onChange={this.logChange()}
+								/>
+
+								<label>Locations</label>
+								<Select
+									name="form-field-name"
+									value="one"
+									options={ShowOptions}
+									onChange={this.logChange()}
+								/>
+
+							</form>
+						</div>
 					</div>
+
 					<div className="col-lg-10">
 						<div className="search">
 							 <form>
-								<label>Test</label>
+								<label><i className="icon-search"></i></label>
 								<input type="text" value={this.state.search} onChange={this.searchChange()} />
 							</form>
 						</div>
@@ -83,11 +129,13 @@ export default class People extends Component {
 								<div className="people-job">
 									{users.jobTitle}
 								</div>
+								<div className="people-link">
+									<NavLink to="/profile/${users.id}"><i className="icon-right-open"></i></NavLink>
+								</div>						
 							</div>						
 							)
 						})}
 					</div>
-				</div>
 			</div>
 		);
 	}
