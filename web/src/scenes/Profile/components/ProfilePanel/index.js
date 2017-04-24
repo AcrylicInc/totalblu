@@ -7,6 +7,9 @@ import { BrowserRouter as Router, Route, Switch, browserHistory, IndexRedirect, 
 import PersonalDetails from './components/PersonalDetails';
 import WorkDetails from './components/WorkDetails';
 import Education from './components/Education';
+import Emergency from './components/Emergency';
+import LeaveAbsence from './components/LeaveAbsence';
+
 
 require('./style.scss');
 
@@ -40,16 +43,24 @@ export default class ProfilePanel extends Component {
 					</div>
 					<div className="row">
 						<ul className="profile-links">
-							<li><HeaderLink to="/app_dev.php/profile/personal-details/">Personal Details</HeaderLink></li>
-							<li><HeaderLink to="/app_dev.php/profile/work-details/">Work Details</HeaderLink></li>
-							<li><HeaderLink to="/app_dev.php/profile/education/">Education</HeaderLink></li>
-							<li><HeaderLink to="/app_dev.php/profile/emerancy/">Emergancy</HeaderLink></li>
-							<li><HeaderLink to="/app_dev.php/profile/leave-and-absence/">Leave & Absence</HeaderLink></li>
+							<li><HeaderLink to="/app_dev.php/profile">Personal Details</HeaderLink></li>
+
+							<li><HeaderLink to="/app_dev.php/profile/work-details">Work Details</HeaderLink></li>
+
+							<li><HeaderLink to="/app_dev.php/profile/education">Education</HeaderLink></li>
+
+							<li><HeaderLink to="/app_dev.php/profile/emergency">Emergency</HeaderLink></li>
+
+							<li><HeaderLink to="/app_dev.php/profile/leave-and-absence">Leave & Absence</HeaderLink></li>
 						</ul>
 					</div>
-					<Route path='/app_dev.php/profile/personal-details' component={PersonalDetails} />
-					<Route path='/app_dev.php/profile/work-details' component={WorkDetails} />
-					<Route path='/app_dev.php/profile/education' component={Education} />
+					<div className="row">
+						<Route exact path='/app_dev.php/profile' component={PersonalDetails} />
+						<Route path='/app_dev.php/profile/work-details' component={WorkDetails} />
+						<Route path='/app_dev.php/profile/education' component={Education} />
+						<Route path='/app_dev.php/profile/Emergency' component={Emergency} />
+						<Route path='/app_dev.php/profile/leave-and-absence' component={LeaveAbsence} />
+					</div>
 				</div>
 			</div>
 		);
