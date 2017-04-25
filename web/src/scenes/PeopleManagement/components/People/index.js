@@ -5,6 +5,7 @@ import ReactPaginate from 'react-paginate';
 import { BrowserRouter as Router, Route, Switch, browserHistory, IndexRedirect, IndexRoute } from 'react-router-dom';
 
 import ProfileAvatar from 'components/profileAvatar';
+import Pagination from 'components/Pagination';
 
 
 require('./style.scss');
@@ -25,91 +26,91 @@ export default class People extends Component {
 				},
 				{
 					"id" : 2,
-					"name" : "Ryan Thorp",
+					"name" : "Sam Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
 				},
 				{
 					"id" : 3,
-					"name" : "Ryan Thorp",
+					"name" : "Aron Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
 				},
 				{
 					"id" : 4,
-					"name" : "Ryan Thorp",
+					"name" : "Billy Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
 				},
 				{
 					"id" : 5,
-					"name" : "Ryan Thorp",
+					"name" : "Andy Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
 				},
 				{
 					"id" : 6,
-					"name" : "Ryan Thorp",
+					"name" : "Tony Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
 				},
 				{
 					"id" : 7,
-					"name" : "Ryan Thorp",
+					"name" : "Greg Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
 				},
 				{
 					"id" : 8,
-					"name" : "Ryan Thorp",
+					"name" : "Mark Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
 				},
 				{
 					"id" : 9,
-					"name" : "Ryan Thorp",
+					"name" : "James Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
 				},
 				{
 					"id" : 10,
-					"name" : "Ryan Thorp",
+					"name" : "Ronny Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
 				},
 				{
 					"id" : 11,
-					"name" : "Ryan Thorp",
+					"name" : "Harry Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
 				},
 				{
 					"id" : 12,
-					"name" : "Ryan Thorp",
+					"name" : "William Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
 				},
 				{
 					"id" : 13,
-					"name" : "Ryan Thorp",
+					"name" : "Ash Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
 				},
 				{
 					"id" : 14,
-					"name" : "Ryan Thorp",
+					"name" : "Charlie Thorp",
 					"jobTitle" : "Front-end Developer",
 					"Department" : "IT",
 					"Office" : "Bedford",
@@ -117,45 +118,68 @@ export default class People extends Component {
 			],
 			offset: 0,
 			search: "",
-			pageCount: 0
+			page: 1,
+			pageCount: 0,
+			usersPerPage: 5,
+			maxPage: 1
 	    };
 	}
-	componentWillMount() {
+	componentDidMount() {
 		this.setState({ pageCount: Math.ceil(this.state.users.length / 5) });
 		
+		let orderedResults = this.state.users.sort( (a, b) => {
+			if (a.name !== null && b.name !== null){
+			    var textA = a.name.toUpperCase();
+			    var textB = b.name.toUpperCase();
+			    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+			}
+		});
+
+		this.setState({ 
+			users: orderedResults,
+			maxPage: Math.ceil(orderedResults.length / this.state.usersPerPage),
+		 });
+
 	}
+
+	filterResults(){
+		let res = this.state.users.slice();
+
+		res = !this.state.search.trim().length ? res : res.filter(r => { if (r.name !== null){ return r.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1; }});
+		
+		return res;
+	}
+
+	paginateResults(array) {
+		// Pagination
+		let start = (this.state.page - 1) * this.state.usersPerPage,
+			end = start + this.state.usersPerPage;
+
+		return array.slice(start, end);
+	}
+
 	searchChange( event ){
 		let user = event.target.value;
 
 		this.setState({search: user});
-
-		this.updateUsers(user);
 	}
 
-	updateUsers(queriedUser){
+	handlePageChange(data) {
+		let maxPage = Math.ceil(this.filterResults().length / this.state.perPage);
+		if( newPage < 1 || newPage > maxPage || newPage == this.state.page) return false;
 
-		this.state.users.forEach( (user, index) => {
-			
-			if ( user.lastIndexOf(queriedUser, 0) === 0 ){
-				console.log(user);
-			}
-
+	    this.setState({
+			page: parseInt(newPage),
 		});
 
-	}
+	};
 
-	handlePageClick = (data) => {
-	    let selected = data.selected;
-	    let offset = Math.ceil(selected * this.props.perPage);
-
-	    this.setState({offset: offset}, () => {
-	      this.loadCommentsFromServer();
-	    });
-	  };
 	logChange(val){
 	}
 
 	render() {
+		let users = this.filterResults();
+		let pages = this.paginateResults(users);
 
 		const ShowOptions = [
 			{ value: 'all', label: 'All employees'},
@@ -229,32 +253,37 @@ export default class People extends Component {
 						<div className="search row">
 							 <form>
 								<label><i className="icon-search"></i></label>
-								<input className="outline-grey" type="text" value={this.state.search} onChange={ () => { this.searchChange(event) } } />
+								<input className="outline-grey" type="text" value={this.state.search} onChange={ (event) => { this.searchChange(event) } } />
 							</form>
 						</div>
 						<div className="controller row">
-							<div class="col-lg-2 middle-xs">
-								{this.state.users.length} Employees
+							<div className="col-lg-2 middle-xs">
+								{users.length} Employees
 							</div>
 
-							<div class="col-lg-10 middle-xs">
-								<ReactPaginate previousLabel={"previous"}
-			                       nextLabel={"next"}
-			                       breakLabel={<a href="">...</a>}
-			                       breakClassName={"break-me"}
-			                       pageCount={this.state.users}
-			                       marginPagesDisplayed={0}
-			                       pageRangeDisplayed={0}
-			                       onPageChange={ () => this.handlePageClick(event) }
-			                       containerClassName={"pagination"}
-			                       subContainerClassName={"pages pagination"}
-			                       activeClassName={"active"} />
+
+							<div className="col-lg-10 middle-xs">
+
+							<Pagination  
+								previousLabel={"previous"}
+								currentPage={this.props.page}
+					        	nextLabel={"next"}
+					        	breakLabel={"..."}
+					        	breakClassName={"break-me"}
+					        	pageCount={this.props.maxPage}
+					        	marginPagesDisplayed={2}
+					        	pageRangeDisplayed={4}
+					       		onPageChange={(val) => this.handlePageChange(val)}
+					       		containerClassName={"pagination"}
+					        	subContainerClassName={"pages pagination"}
+					       		activeClassName={"active"} /> 
+
 							</div>
 						</div>
-						{ this.state.users.map( users => {
+						{ pages.map( (users, index) => {
 							return ( 
 							<div className="people-row row middle-xs outline-grey"
-	 						key={users.id}
+	 						key={index}
 							{...users} >
 								<ProfileAvatar 
 								userName={users.name} />
