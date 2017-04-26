@@ -2318,6 +2318,12 @@ nav.navigation-top {
         bottom: -10px;
         left: 50%;
         margin-left: -2.5px; }
+.pagination {
+  list-style: none;
+  margin: 0;
+  padding: 0; }
+  .pagination li {
+    display: inline-block; }
 .people-panel {
   font-size: 14px; }
 

@@ -1,9 +1,10 @@
-import React, { Component, PropTypes } from 'react';
-import classNames from 'classnames';
+import React, { Component } from 'react';
+import { PropTypes } from 'react-prop-types';
 
 import createFragment from 'react-addons-create-fragment';
 import PageView from './PageView';
-import BreakView from './BreakView';
+
+require('./style.scss');
 
 class Pagination extends Component {
   constructor(props) {
@@ -13,8 +14,12 @@ class Pagination extends Component {
 	};
   }
   onPageChange(val){
-	this.props.onPageChange( val );
 
+	console.log(val, this.props.pageCount);
+
+	if ( val > this.props.pageCount || val < 1 ) return false;
+
+	this.props.onPageChange( val );
   }
   pagination() {
 	let items = {};
@@ -31,81 +36,15 @@ class Pagination extends Component {
 		  page={index + 1} />
 	  }
 
-	} else {
-
-	  let leftSide  = (this.props.pageRangeDisplayed / 2);
-	  let rightSide = (this.props.pageRangeDisplayed - leftSide);
-
-	  if (this.props.currentPage > this.props.pageCount - this.props.pageRangeDisplayed / 2) {
-		rightSide = this.props.pageCount - this.props.currentPage;
-		leftSide  = this.props.pageRangeDisplayed - rightSide;
-	  }
-	  else if (this.props.currentPage < this.props.pageRangeDisplayed / 2) {
-		leftSide  = this.props.currentPage;
-		rightSide = this.props.pageRangeDisplayed - leftSide;
-	  }
-
-	  let index;
-	  let page;
-	  let breakView;
-
-	  for (index = 0; index < this.props.pageCount; index++) {
-
-		page = index + 1;
-
-		let pageView = (
-		  <PageView
-			onPageChange={(val) => this.onPageChange(val)}
-			selected={this.props.currentPage === index}
-			pageClassName={this.props.pageClassName}
-			pageLinkClassName={this.props.pageLinkClassName}
-			activeClassName={this.props.activeClassName}
-			page={page} />
-		);
-
-		if (page <= this.props.marginPagesDisplayed) {
-		  items['key' + index] = pageView;
-		  continue;
-		}
-
-		if (page > this.props.pageCount - this.props.marginPagesDisplayed) {
-		  items['key' + index] = pageView;
-		  continue;
-		}
-
-		if ((index >= this.props.currentPage - leftSide) && (index <= this.props.currentPage + rightSide)) {
-		  items['key' + index] = pageView;
-		  continue;
-		}
-
-		let keys            = Object.keys(items);
-		let breakLabelKey   = keys[keys.length - 1];
-		let breakLabelValue = items[breakLabelKey];
-
-		if (this.props.breakLabel && breakLabelValue !== breakView) {
-		  breakView = (
-			<BreakView
-			  breakLabel={this.props.breakLabel}
-			  breakClassName={this.props.breakClassName} />
-		  );
-
-		  items['key' + index] = breakView;
-		}
-	  }
-	}
+	} 
 
 	return items;
   };
 
   render() {
-	let disabled = this.props.disabledClassName;
-
-	const previousClasses = classNames(this.props.previousClassName,
-									   {[disabled]: this.props.currentPage === 0});
-
-	const nextClasses = classNames(this.props.nextClassName,
-								   {[disabled]: this.props.currentPage === this.props.pageCount - 1});
-
+	const previousClasses = this.props.currentPage === 0 ? 'disabled' : '';
+	const nextClasses = this.props.currentPage === this.props.pageCount - 1 ? 'disabled' : '';
+	
 	return (
 	  <ul className={this.props.containerClassName}>
 		<li className={previousClasses}>
@@ -113,7 +52,7 @@ class Pagination extends Component {
 			 className="prev"
 			 tabIndex="0"
 			 onKeyPress={this.handlePreviousPage}>
-			{this.props.previousLabel}
+			&lt;
 		  </a>
 		</li>
 
@@ -124,7 +63,7 @@ class Pagination extends Component {
 			 className="next"
 			 tabIndex="0"
 			 onKeyPress={this.handleNextPage}>
-			{this.props.nextLabel}
+			&gt;
 		  </a>
 		</li>
 	  </ul>

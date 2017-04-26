@@ -21,9 +21,9 @@ const store = createStore(
 	window.devToolsExtension && window.devToolsExtension()
 )
 
-store.subscribe( () => {
-	console.log("storechange", store.getState());
-});
+// store.subscribe( () => {
+// 	console.log("storechange", store.getState());
+// });
 
 render(
   <Root store={store} />,

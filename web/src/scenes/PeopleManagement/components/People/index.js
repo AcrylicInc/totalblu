@@ -144,9 +144,7 @@ export default class People extends Component {
 
 	filterResults(){
 		let res = this.state.users.slice();
-
 		res = !this.state.search.trim().length ? res : res.filter(r => { if (r.name !== null){ return r.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1; }});
-		
 		return res;
 	}
 
@@ -165,13 +163,9 @@ export default class People extends Component {
 	}
 
 	handlePageChange(data) {
-		let maxPage = Math.ceil(this.filterResults().length / this.state.perPage);
-		if( newPage < 1 || newPage > maxPage || newPage == this.state.page) return false;
-
 	    this.setState({
-			page: parseInt(newPage),
+			page: parseInt(data),
 		});
-
 	};
 
 	logChange(val){
@@ -180,6 +174,8 @@ export default class People extends Component {
 	render() {
 		let users = this.filterResults();
 		let pages = this.paginateResults(users);
+		let currentPage = this.state.page;
+		let maxPage = Math.ceil(users.length / this.state.usersPerPage);
 
 		const ShowOptions = [
 			{ value: 'all', label: 'All employees'},
@@ -262,20 +258,15 @@ export default class People extends Component {
 							</div>
 
 
-							<div className="col-lg-10 middle-xs">
+							<div className="col-lg-10 middle-xs end-lg">
 
 							<Pagination  
-								previousLabel={"previous"}
-								currentPage={this.props.page}
-					        	nextLabel={"next"}
-					        	breakLabel={"..."}
-					        	breakClassName={"break-me"}
-					        	pageCount={this.props.maxPage}
-					        	marginPagesDisplayed={2}
-					        	pageRangeDisplayed={4}
+								currentPage={currentPage}
+					        	pageCount={maxPage}
+					        	marginPagesDisplayed={0}
+					        	pageRangeDisplayed={0}
 					       		onPageChange={(val) => this.handlePageChange(val)}
 					       		containerClassName={"pagination"}
-					        	subContainerClassName={"pages pagination"}
 					       		activeClassName={"active"} /> 
 
 							</div>

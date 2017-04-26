@@ -17,10 +17,7 @@ require('./style.scss');
 class PeopleManagement extends Component {
 	constructor(props) {
 		super(props);
-
-		console.log(props);
-
-		
+	
 	 //    store.subscribe(() => {
 	 //      this.setState({
 	 //        users: store.getState().users

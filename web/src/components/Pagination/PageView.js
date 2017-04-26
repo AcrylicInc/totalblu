@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {Component} from 'react';
+import { PropTypes } from 'react-prop-types';
 
-class PageView extends React.Component {
+class PageView extends Component {
   constructor(props) {
   super(props);
 

@@ -28,8 +28,6 @@ function handleRender(req, res) {
 	const html = renderToString(
 		<Root store={store} />
 	)
-  console.log('test', html);
-
 	  // Grab the initial state from our Redux store
 	  const preloadedState = store.getState()
 
