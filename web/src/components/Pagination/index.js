@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { PropTypes } from 'react-prop-types';
 
 import createFragment from 'react-addons-create-fragment';
-import PageView from './PageView';
 
 require('./style.scss');
 
@@ -15,55 +14,55 @@ class Pagination extends Component {
   }
   onPageChange(val){
 
-	console.log(val, this.props.pageCount);
-
 	if ( val > this.props.pageCount || val < 1 ) return false;
 
 	this.props.onPageChange( val );
   }
-  pagination() {
-	let items = {};
-
-	if (this.props.pageCount <= this.props.pageRangeDisplayed) {
-
-	  for (let index = 0; index < this.props.pageCount; index++) {
-		items['key' + index] = <PageView
-		  onPageChange={(val) => this.onPageChange(val)}
-		  selected={this.props.currentPage === index}
-		  pageClassName={this.props.pageClassName}
-		  pageLinkClassName={this.props.pageLinkClassName}
-		  activeClassName={this.props.activeClassName}
-		  page={index + 1} />
-	  }
-
-	} 
-
-	return items;
-  };
-
-  render() {
+ 
+   render() {
 	const previousClasses = this.props.currentPage === 0 ? 'disabled' : '';
 	const nextClasses = this.props.currentPage === this.props.pageCount - 1 ? 'disabled' : '';
+	const currentPage = this.props.currentPage;
 	
 	return (
 	  <ul className={this.props.containerClassName}>
 		<li className={previousClasses}>
-		  <a onClick={(val) => this.onPageChange( this.props.currentPage - 1 )}
-			 className="prev"
+		  <a onClick={(val) => this.onPageChange( 1 )}
+			 className="firstPage"
 			 tabIndex="0"
 			 onKeyPress={this.handlePreviousPage}>
-			&lt;
+			<i className="fa fa-step-backward" aria-hidden="true"></i>
 		  </a>
 		</li>
 
-		{createFragment(this.pagination())}
+		<li className={previousClasses}>
+		  <a onClick={(val) => this.onPageChange( this.props.currentPage - 1 )}
+			 className="prevPage"
+			 tabIndex="0"
+			 onKeyPress={this.handlePreviousPage}>
+			 <i className="fa fa-caret-left" aria-hidden="true"></i>
+		  </a>
+		</li>
+
+		<li className={currentPage}>
+			{currentPage}
+		</li>
 
 		<li className={nextClasses}>
 		  <a onClick={(val) => this.onPageChange( this.props.currentPage + 1 )}
-			 className="next"
+			 className="nextPage"
 			 tabIndex="0"
 			 onKeyPress={this.handleNextPage}>
-			&gt;
+			<i className="fa fa-caret-right" aria-hidden="true"></i>
+		  </a>
+		</li>
+
+		<li className={nextClasses}>
+		  <a onClick={(val) => this.onPageChange( this.props.pageCount )}
+			 className="lastPage"
+			 tabIndex="0"
+			 onKeyPress={this.handleNextPage}>
+			<i className="fa fa-step-forward" aria-hidden="true"></i>
 		  </a>
 		</li>
 	  </ul>

@@ -2324,6 +2324,11 @@ nav.navigation-top {
   padding: 0; }
   .pagination li {
     display: inline-block; }
+  .pagination a {
+    color: #cccccc;
+    cursor: pointer;
+    padding: 0 8px;
+    margin: 0 2px; }
 .people-panel {
   font-size: 14px; }
 

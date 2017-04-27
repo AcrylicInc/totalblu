@@ -21,103 +21,107 @@ export default class People extends Component {
 					"id" : 1,
 					"name" : "Ryan Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "IT",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 2,
 					"name" : "Sam Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 3,
 					"name" : "Aron Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 4,
 					"name" : "Billy Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 5,
 					"name" : "Andy Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 6,
 					"name" : "Tony Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 7,
 					"name" : "Greg Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 8,
 					"name" : "Mark Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 9,
 					"name" : "James Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 10,
 					"name" : "Ronny Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 11,
 					"name" : "Harry Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 12,
 					"name" : "William Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 13,
 					"name" : "Ash Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				},
 				{
 					"id" : 14,
 					"name" : "Charlie Thorp",
 					"jobTitle" : "Front-end Developer",
-					"Department" : "IT",
-					"Office" : "Bedford",
+					"department" : "HR",
+					"location" : "Bedford",
 				}
 			],
 			offset: 0,
 			search: "",
+			show: "all",
+			sort: "all",
+			department: "all",
+			location: "all",
 			page: 1,
 			pageCount: 0,
 			usersPerPage: 5,
@@ -144,6 +148,31 @@ export default class People extends Component {
 
 	filterResults(){
 		let res = this.state.users.slice();
+
+		const show = this.state.show === 'all' ? 'all' : this.state.show;
+		const sort = this.state.sort === 'all' ? 'all' : this.state.sort;
+		const department = this.state.department === 'all' ? 'all' : this.state.department;
+		const location = this.state.location === 'all' ? 'all' : this.state.location;
+
+			// res = res.filter(item => {
+			// 	console.log(item)
+			// });
+		res = res.filter( item => {
+			if ( department === 'all' || item.department === department ) return item;
+		});
+
+		// res = res.filter( item => {
+		// 	if ( sort === 'all' || item.department === department ) return item;
+		// });
+
+		// res = res.filter( item => {
+		// 	if ( department === 'all' || item.department === department ) return item;
+		// });
+
+		// res = res.filter( item => {
+		// 	if ( location === 'all' || item.office === department ) return item;
+		// });
+
 		res = !this.state.search.trim().length ? res : res.filter(r => { if (r.name !== null){ return r.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1; }});
 		return res;
 	}
@@ -163,12 +192,20 @@ export default class People extends Component {
 	}
 
 	handlePageChange(data) {
-	    this.setState({
-			page: parseInt(data),
-		});
+	    this.setState({ page: parseInt(data) });
 	};
 
-	logChange(val){
+	filterShow(data){
+		this.setState({ show: data.value });
+	}
+	filterSort(data){
+		this.setState({ sort: data.value });
+	}
+	filterDepartments(data){
+		this.setState({ department: data.value });
+	}
+	filterLocation(data){
+		this.setState({ location: data.value });
 	}
 
 	render() {
@@ -203,7 +240,7 @@ export default class People extends Component {
 											{value: 'employees', label: 'Employees'},
 											{value: 'hierarchical', label: 'Hierarchical'}
 										]}
-										onChange={this.logChange()}
+										onChange={ (val) => { this.filterShow(val) } }
 									/>
 								</fieldset>
 
@@ -215,7 +252,7 @@ export default class People extends Component {
 										clearable={false}
 										searchable={false}
 										options={ShowOptions}
-										onChange={this.logChange()}
+										onChange={ (val) => { this.filterSort(val) } }
 									/>
 								</fieldset>
 
@@ -225,8 +262,13 @@ export default class People extends Component {
 										name="form-field-name"
 										value="one"
 										clearable={false}
-										options={ShowOptions}
-										onChange={this.logChange()}
+										options={[
+											{value: 'all', label: 'All Departments'},
+											{value: 'IT', label: 'IT'},
+											{value: 'employees', label: 'Employees'},
+											{value: 'hierarchical', label: 'Hierarchical'}
+										]}
+										onChange={ (val) => { this.filterDepartments(val) } }
 									/>
 								</fieldset>
 
@@ -237,7 +279,7 @@ export default class People extends Component {
 										value="one"
 										clearable={false}
 										options={ShowOptions}
-										onChange={this.logChange()}
+										onChange={ (val) => { this.filterLocation(val) } }
 									/>
 								</fieldset>
 
@@ -257,10 +299,9 @@ export default class People extends Component {
 								{users.length} Employees
 							</div>
 
-
 							<div className="col-lg-10 middle-xs end-lg">
 
-							<Pagination  
+								<Pagination  
 								currentPage={currentPage}
 					        	pageCount={maxPage}
 					        	marginPagesDisplayed={0}
@@ -290,6 +331,24 @@ export default class People extends Component {
 							</div>						
 							)
 						})}
+						<div className="controller row">
+							<div className="col-lg-2 middle-xs">
+								{users.length} Employees
+							</div>
+
+							<div className="col-lg-10 middle-xs end-lg">
+
+								<Pagination  
+								currentPage={currentPage}
+					        	pageCount={maxPage}
+					        	marginPagesDisplayed={0}
+					        	pageRangeDisplayed={0}
+					       		onPageChange={(val) => this.handlePageChange(val)}
+					       		containerClassName={"pagination"}
+					       		activeClassName={"active"} /> 
+
+							</div>
+						</div>
 					</div>
 			</div>
 		);
