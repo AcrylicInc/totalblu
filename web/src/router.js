@@ -24,7 +24,7 @@ const Root = ({ store }) => (
 			</Route>
 
 
-			<Route path='/app_dev.php/profile' component={Profile} />
+			<Route path='/app_dev.php/profile/:userid' component={Profile} />
 
 		</App>
 	</Router>

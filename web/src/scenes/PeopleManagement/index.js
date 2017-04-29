@@ -52,7 +52,8 @@ class PeopleManagement extends Component {
 		return (
 			<div className="app">
 				<header>
-					<Navigation 
+					<Navigation
+						pageTitle={"People Management"}
 						subNav={ links } 
 					/>
 				</header>

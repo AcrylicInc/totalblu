@@ -11,10 +11,6 @@ export default class Profile extends Component {
 
 	}
 	
-	// static propTypes = {
-	// 	children: PropTypes.instanceOf(Profile).isRequired,
-	// };
-
 	componentDidMount() {
 	    document.title = "Profile";
 	}
@@ -33,6 +29,7 @@ export default class Profile extends Component {
 			<div className="app">
 				<header>
 					<Navigation 
+						pageTitle={"Profile"}
 						subNav={ links } 
 					/>
 				</header>

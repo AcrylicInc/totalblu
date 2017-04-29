@@ -14,9 +14,7 @@ require('./style.scss');
 
 class App extends Component {
 
-	// static propTypes = {
-	// 	children: PropTypes.array.isRequired,
-	// };
+
 	constructor(props) {
 		super(props);
 
@@ -33,6 +31,10 @@ class App extends Component {
 		);
 	}
 }
+
+App.propTypes = {
+	children: React.PropTypes.array.isRequired,
+};
 
 const mapStateToProps = state => (
 	{

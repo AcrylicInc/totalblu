@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
 import Select from 'react-select';
 import ReactPaginate from 'react-paginate';
-import { BrowserRouter as Router, Route, Switch, browserHistory, IndexRedirect, IndexRoute } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import ProfileAvatar from 'components/profileAvatar';
 import Pagination from 'components/Pagination';
@@ -154,9 +154,6 @@ export default class People extends Component {
 		const department = this.state.department === 'all' ? 'all' : this.state.department;
 		const location = this.state.location === 'all' ? 'all' : this.state.location;
 
-			// res = res.filter(item => {
-			// 	console.log(item)
-			// });
 		res = res.filter( item => {
 			if ( department === 'all' || item.department === department ) return item;
 		});
@@ -315,8 +312,7 @@ export default class People extends Component {
 						{ pages.map( (users, index) => {
 							return ( 
 							<div className="people-row row middle-xs outline-grey"
-	 						key={index}
-							{...users} >
+	 						key={index} >
 								<ProfileAvatar 
 								userName={users.name} />
 								<div className="people-name">
@@ -326,7 +322,7 @@ export default class People extends Component {
 									{users.jobTitle}
 								</div>
 								<div className="people-link">
-									<NavLink to="/profile/${users.id}"><i className="icon-right-open"></i></NavLink>
+									<NavLink to={"/profile/" + users.id}><i className="icon-right-open"></i></NavLink>
 								</div>						
 							</div>						
 							)

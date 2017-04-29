@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import { NavLink } from 'react-router-dom';
+import { PropTypes } from 'react-prop-types';
 
 import { matchPath } from 'react-router'
 
 import ProfileAvatar from 'components/profileAvatar';
-import { BrowserRouter as Router, Route, Switch, browserHistory, IndexRedirect, IndexRoute } from 'react-router-dom';
-import PeopleManagement from 'scenes/PeopleManagement/';
+import { BrowserRouter as Router, Route, Switch, browserHistory } from 'react-router-dom';
 
 require('./style.scss');
 
@@ -29,19 +29,19 @@ export default class Navigation extends Component {
 		return firstInitial+lastInitial;
 	}
 
-	render() {		
+	render() {
 		return (
 			<nav className="navigation-top">
 				<div className="row">
 					<div className="col-lg-11">
 						<div className="navigation-page">
-							<h1>Dashboard</h1>
+							<h1>{this.props.pageTitle}</h1>
 						</div>
 						<ul className="navigation-links">
 						{this.props.subNav.map((route, index) => (
 							<li>
 				          	<NavLink
-					            key={index +'navroute'}
+					            key={index}
 					            to={`${route.link}`}
 					            activeClassName="active" 
 					            exact
@@ -63,5 +63,8 @@ export default class Navigation extends Component {
 	}
 };
 
+Navigation.propTypes = {
+	pageTitle: React.PropTypes.string.isRequired,
+};
 
 	
