@@ -2393,6 +2393,10 @@ nav.navigation-top {
     margin-bottom: 10px; }
   .filters-siderbar fieldset {
     margin-bottom: 20px; }
+.department-panel {
+  padding: 30px 20px; }
+  .department-panel .departments-row {
+    margin: 15px 0; }
 .people-panel {
   padding: 30px 20px; }
 .profile-links {

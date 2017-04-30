@@ -5,8 +5,10 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var BUILD_DIR = path.resolve(__dirname);
 var APP_DIR = path.resolve(__dirname);
 
+const appScss = new ExtractTextPlugin({ filename: 'assets/css/style.css', disable: false, allChunks: true });
+  
 var plugins = [
-  new ExtractTextPlugin({ filename: 'assets/css/style.css', disable: false, allChunks: true })
+    appScss
 ];
 
 
@@ -45,22 +47,17 @@ var config = {
   module: {
   	loaders: [
   		{
-  			test: /\.js?/,
-  			include: APP_DIR,
+        test: /\.js?/,
+        include: APP_DIR,
         exclude: '/node_modules/',
-  			loader: 'babel-loader',
+        loader: 'babel-loader',
         query: { presets: ["es2015", "react", "stage-0"] }
-  		},
+      },
       {
         test: /\.scss$/,
         exclude: [/node_modules/, /src\/containers\/mixins.scss$/],
-        loader: ExtractTextPlugin.extract('css-loader!sass-loader')
-      },
-      {
-          test: /\.(eot|svg|ttf|woff|woff2)$/,
-          loader: 'file?name=assets/font/[name].[ext]'
-      },
-      
+        loader: appScss.extract('css-loader!sass-loader')
+      }      
   	]
   },
   plugins: plugins,

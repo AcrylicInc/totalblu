@@ -17,12 +17,6 @@ require('./style.scss');
 class PeopleManagement extends Component {
 	constructor(props) {
 		super(props);
-	
-	 //    store.subscribe(() => {
-	 //      this.setState({
-	 //        users: store.getState().users
-	 //      });
-	 //    });
 
 	}
 	
@@ -59,14 +53,9 @@ class PeopleManagement extends Component {
 				</header>
 				<div className="app-container row">
 					<div className="col-lg-12">
-						{ links.map((route, index) => (
-				          	<Route
-					            key={index}
-					            path={route.link}
-					            exact
-					            component={route.main}
-				         	/>
-						))}
+				        <Route path={links[0].link} exact component={() => ( <People {...this.state} /> )} />
+				        <Route path={links[1].link} exact component={() => ( <Departments {...this.state} /> )} />
+				        <Route path={links[2].link} exact component={() => ( <Offices {...this.state} /> )} />
 					</div>
 				</div>
 			</div>
@@ -80,4 +69,4 @@ const mapStateToProps = state => (
 	}
 );
 
-export default connect(mapStateToProps)(PeopleManagement);
+export default PeopleManagement;

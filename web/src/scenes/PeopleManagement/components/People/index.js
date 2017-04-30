@@ -143,7 +143,6 @@ export default class People extends Component {
 			users: orderedResults,
 			maxPage: Math.ceil(orderedResults.length / this.state.usersPerPage),
 		 });
-
 	}
 
 	filterResults(){
@@ -350,6 +349,3 @@ export default class People extends Component {
 		);
 	}
 };
-
-
-	

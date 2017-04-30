@@ -19,10 +19,7 @@ const Root = ({ store }) => (
 
 			<Route exact={true} path='/app_dev.php/dashboard' component={Dashboard} />
 			
-			<Route path='/app_dev.php/people-management' component={PeopleManagement} >
-
-			</Route>
-
+			<Route path='/app_dev.php/people-management' component={PeopleManagement} />
 
 			<Route path='/app_dev.php/profile/:userid' component={Profile} />
 
