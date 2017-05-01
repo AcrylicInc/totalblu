@@ -1,18 +1,38 @@
 {# app/Resources/views/security/login.html.twig #}
-{# ... you will probably extend your base template, like base.html.twig #}
 {% extends 'base.html.twig' %}
 
+{% block bodyClasses %}full-height login-tpl{% endblock %}
+
 {% block body %}
-    <form action="{{ path('login') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}" />
+<div class="container-fluid no-padding">
+    <div class="login-left">
+        <div class="container-fluid">
+            <div class="row middle-xs"> 
+                <div class="col-md-12">
+                    <h1>Complete control <span>of your business</span></h1>
+                    <p>Manage every aspect of your company<br />with our cloud based platform</p>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password" />
-        <button type="submit">login</button>
-    </form>
+                    <a href="#" class="btn btn-white">Take the tour</a>
+                    <a href="#" class="btn btn-outline-white">Business insights</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="login-right">
+        <div class="container-fluid">
+            <div class="col-md-12">
+                <h3>Login to Totalblu<br />HRIS system</h3>
+                <form action="{{ path('login') }}" method="post">
+                    <input type="text" id="username" placeholder="Email address" name="_username" value="{{ last_username }}" />
+                    <input type="password" id="password" placeholder="Password" name="_password" />
+                    <button type="submit">login</button>
+                </form>
 
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+                {% if error %}
+                    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

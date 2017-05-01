@@ -7,9 +7,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import ProfileAvatar from 'components/profileAvatar';
 import Pagination from 'components/Pagination';
 
-
 require('./style.scss');
-
 
 export default class People extends Component {
 	constructor(props) {
