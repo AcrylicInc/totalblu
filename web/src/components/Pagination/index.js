@@ -22,7 +22,6 @@ class Pagination extends Component {
    render() {
 	const previousClasses = this.props.currentPage === 0 ? 'disabled' : '';
 	const nextClasses = this.props.currentPage === this.props.pageCount - 1 ? 'disabled' : '';
-	const currentPage = this.props.currentPage;
 	
 	return (
 	  <ul className={this.props.containerClassName}>
@@ -44,8 +43,8 @@ class Pagination extends Component {
 		  </a>
 		</li>
 
-		<li className={currentPage}>
-			{currentPage}
+		<li>
+			{this.props.currentPage} / {this.props.pageCount} pages
 		</li>
 
 		<li className={nextClasses}>
