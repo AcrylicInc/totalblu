@@ -18,127 +18,141 @@ export default class Departments extends Component {
 					"id" : 1,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 2,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 3,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 4,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 5,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com', 'test2@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 6,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com', 'test2@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 7,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com', 'test2@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 8,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com', 'test2@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 9,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com', 'test2@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 10,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com', 'test2@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 11,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com', 'test2@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 12,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com', 'test2@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 13,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com', 'test2@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				},
 				{
 					"id" : 14,
 					"name" : "Finance",
 					"employees" : 42,
+					"managerName" : "Ryan Thorp",
 					"managerID" : 1,
 					"location" : "Bedford",
 					"contactEmails" : [ 'test@test.com' ],
-					"contactPhone" : [ '012345678910' ]
+					"contactNumbers" : [ '012345678910' ]
 				}
 			],
 			offset: 0,
@@ -149,7 +163,7 @@ export default class Departments extends Component {
 			location: "all",
 			page: 1,
 			pageCount: 0,
-			usersPerPage: 5,
+			departmentsPerPage: 6,
 			maxPage: 1
 	    };	
 	}
@@ -167,7 +181,7 @@ export default class Departments extends Component {
 
 		this.setState({ 
 			departments: orderedResults,
-			maxPage: Math.ceil(orderedResults.length / this.state.usersPerPage),
+			maxPage: Math.ceil(orderedResults.length / this.state.departmentsPerPage),
 		 });
 	}
 
@@ -183,16 +197,24 @@ export default class Departments extends Component {
 		// 	if ( department === 'all' || item.department === department ) return item;
 		// });
 
-		res = !this.state.search.trim().length ? res : res.filter(r => { if (r.name !== null){ return r.name.toLowerCase().indexOf(this.state.search.toLowerCase()) > -1; }});
+		res = !this.state.search.trim().length ? res : res.filter(r => { if (r.name !== null){ return r.name.toLowerCase().indexOf( this.state.search.toLowerCase() ) > -1; }});
 		return res;
 	}
 
 	paginateResults(array) {
 		// Pagination
-		let start = (this.state.page - 1) * this.state.usersPerPage,
-			end = start + this.state.usersPerPage;
+		let start = (this.state.page - 1) * this.state.departmentsPerPage,
+			end = start + this.state.departmentsPerPage;
 
 		return array.slice(start, end);
+	}
+
+	searchChange( event ){
+		this.setState({search: event.target.value});
+	}
+	
+	handlePageChange(data) {
+	    this.setState({ page: parseInt(data) });
 	}
 
 	render() {
@@ -234,40 +256,46 @@ export default class Departments extends Component {
 
 							</div>
 						</div>
+						
 						<div className="row departments-row">
 						{ pages.map( (departments, index) => {
-							return ( 
-								<div className="col-md-6 middle-xs departments-block outline-grey" key={index} >
-									<div className="row">
-										<div className="col-md-2">
-											<h5>{departments.name}</h5>
-											<p><i>{departments.location}</i></p>
+				
+							return (
+								<div className="col-md-4 middle-xs" key={index} >
+									<div className="departments-block outline-grey">
+										<div className="row">
+											<div className="col-md-3">
+												<h5>{departments.name}</h5>
+												<p><i>{departments.location}</i></p>
+											</div>
+
+											<div className="col-md-4">
+												<h5>Department Head</h5>
+													<NavLink to={"/profile/" + departments.managerID}>{departments.managerName}</NavLink>
+											</div>
+
+											<div className="col-md-5">
+												<h5>Contact Information</h5>
+												{ 
+													departments.contactEmails.map( (email, index) => {
+														return <a href={"mailto:" + email} key={index}>{email}</a>
+													})
+												}
+												{ 
+													departments.contactNumbers.map( (number, index) => {
+														return <a href={"tel:" + number} key={index}>{number}</a>
+													})
+												}
+											</div>
 										</div>
 
-										<div className="col-md-3">
-											<h5>Department Head</h5>
-											{ 
-											departments.contactEmails.forEach((email) => {
-												let emailLink = document.createElement("a");
-												let emailDiv = document.createElement("div");
-
-												emailLink.setAttribute('href', "mailto" + email);
-												emailLink.textContent = email;
-
-												emailDiv.classList +=  "department-contact-emails";
-												
-												emailDiv.appendChild(emailLink);
-
-												console.log(emailDiv);
-												return ( emailDiv );
-											})
-											}
-										</div>
-
-										<div className="col-md-3">
-											<h5>Contact Information</h5>
-										</div>
-									</div>				
+										<div className="row" style={{marginTop: "auto"}}>
+											<div className="col-md-12">
+												<a className="btn" href="">Email all</a>
+												<NavLink className="btn btn-grey-outline" to={"/departments/" + departments.id}>Edit departments</NavLink>
+											</div>
+										</div>				
+									</div>						
 								</div>						
 							)
 						})}

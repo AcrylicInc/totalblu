@@ -310,8 +310,7 @@ export default class People extends Component {
 						</div>
 						{ pages.map( (users, index) => {
 							return ( 
-							<div className="people-row row middle-xs outline-grey"
-	 						key={index} >
+							<div className="people-row row middle-xs outline-grey" key={index} >
 								<ProfileAvatar 
 								userName={users.name} />
 								<div className="people-name">

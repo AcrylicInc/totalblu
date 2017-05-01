@@ -2,9 +2,35 @@
 	padding: 30px 20px;
 
 	.departments-row{
-		margin: 15px 0;
+		padding: 0;
+
+		> .col-md-4{
+			margin-top: 20px;
+
+			&:nth-child(-n + 3){
+				margin-top: 0;
+			}
+		}
 	}
 
 	.departments-block{
+		padding: 20px;
+		font-size: 14px;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+
+		h5{
+			font-size: 15px;
+		}
+
+		a{
+			display: block;
+		}
+
+		.btn{
+			display: inline-flex;
+			margin: 30px 10px 0 0;
+		}
 	}
 }

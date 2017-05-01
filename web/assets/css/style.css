@@ -2041,8 +2041,14 @@ nav.sidebar {
     order: -1; }
   .last-lg {
     order: 1; } }
+
+/*
+ * Custom
+ */
+.center-text {
+  text-align: center; }
 body {
-  background: #edf0f9;
+  background: #ffffff;
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0; }
@@ -2054,7 +2060,8 @@ p, a, span, div {
   padding: 0; }
 
 a {
-  text-decoration: none; }
+  text-decoration: none;
+  color: #58a4f2; }
 
 * {
   box-sizing: border-box;
@@ -2062,12 +2069,11 @@ a {
 
 .app-container {
   padding: 40px 40px 40px 120px;
-  width: 100%; }
+  width: 100%;
+  margin: 0; }
 
 .block {
-  background: #ffffff;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(152, 152, 152, 0.1); }
+  background: #ffffff; }
   .block .block-wrapper {
     padding: 30px; }
 
@@ -2080,12 +2086,21 @@ a {
   border-radius: 3px;
   color: #ffffff;
   display: inline-flex;
-  transition: background-color 0.2s ease; }
+  transition: all 0.2s ease;
+  text-align: center; }
   .btn:hover {
     background-color: #4d94de; }
 
 .btn-large {
   padding: 15px 50px; }
+
+.btn-grey-outline {
+  background: transparent;
+  border: 1px solid #cccccc;
+  color: #cccccc; }
+  .btn-grey-outline:hover {
+    background: #f1f1f1;
+    color: #2d2e39; }
 
 /**
  * Common Component Classes 
@@ -2290,9 +2305,10 @@ nav .profile-avatar {
   text-align: right; }
 nav.navigation-top {
   background: #FFFFFF;
-  margin-left: 80px;
+  margin: 0 0 -140px 80px;
   padding: 20px;
-  width: calc( 100% - 80px); }
+  width: calc( 100% - 80px);
+  border-bottom: 150px solid #58a4f2; }
   nav.navigation-top h1 {
     color: #58a4f2;
     font-weight: 300;
@@ -2396,7 +2412,24 @@ nav.navigation-top {
 .department-panel {
   padding: 30px 20px; }
   .department-panel .departments-row {
-    margin: 15px 0; }
+    padding: 0; }
+    .department-panel .departments-row > .col-md-4 {
+      margin-top: 20px; }
+      .department-panel .departments-row > .col-md-4:nth-child(-n + 3) {
+        margin-top: 0; }
+  .department-panel .departments-block {
+    padding: 20px;
+    font-size: 14px;
+    height: 100%;
+    display: flex;
+    flex-direction: column; }
+    .department-panel .departments-block h5 {
+      font-size: 15px; }
+    .department-panel .departments-block a {
+      display: block; }
+    .department-panel .departments-block .btn {
+      display: inline-flex;
+      margin: 30px 10px 0 0; }
 .people-panel {
   padding: 30px 20px; }
 .profile-links {
