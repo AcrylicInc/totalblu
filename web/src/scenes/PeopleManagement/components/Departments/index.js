@@ -271,7 +271,7 @@ export default class Departments extends Component {
 
 											<div className="col-md-4">
 												<h5>Department Head</h5>
-													<NavLink to={"/profile/" + departments.managerID}>{departments.managerName}</NavLink>
+													<NavLink to={"/app_dev.php/profile/" + departments.managerID}>{departments.managerName}</NavLink>
 											</div>
 
 											<div className="col-md-5">

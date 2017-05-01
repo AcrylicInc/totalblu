@@ -320,7 +320,7 @@ export default class People extends Component {
 									{users.jobTitle}
 								</div>
 								<div className="people-link">
-									<NavLink to={"/profile/" + users.id}><i className="icon-right-open"></i></NavLink>
+									<NavLink to={"/app_dev.php/profile/" + users.id}><i className="icon-right-open"></i></NavLink>
 								</div>						
 							</div>						
 							)

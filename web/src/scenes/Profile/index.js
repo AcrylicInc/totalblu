@@ -22,6 +22,11 @@ export default class Profile extends Component {
 			    exact: true,
 			    text: 'Overview',
 				link: '/app_dev.php/profile'
+			},
+			{
+			    exact: true,
+			    text: 'Edit',
+				link: '/app_dev.php/profile/edit'
 			}
 		]
 
