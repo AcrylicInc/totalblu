@@ -1,197 +1,166 @@
-'use strict';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { findDOMNode } from 'react-dom';
+import cn from 'classnames';
 
-exports.__esModule = true;
+import dates from './utils/dates';
+import { segStyle } from './utils/eventLevels';
+import { notify } from './utils/helpers';
+import { elementType } from './utils/propTypes';
+import { dateCellSelection, slotWidth, getCellAtX, pointInBox } from './utils/selection';
+import Selection, { getBoundsForNode, isEvent } from './Selection';
 
-var _react = require('react');
+class BackgroundCells extends React.Component {
 
-var _react2 = _interopRequireDefault(_react);
+  static propTypes = {
+    cellWrapperComponent: elementType,
+    container: PropTypes.func,
+    selectable: PropTypes.oneOf([true, false, 'ignoreEvents']),
 
-var _reactDom = require('react-dom');
+    onSelectSlot: PropTypes.func.isRequired,
+    onSelectEnd: PropTypes.func,
+    onSelectStart: PropTypes.func,
 
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _dates = require('./utils/dates');
-
-var _dates2 = _interopRequireDefault(_dates);
-
-var _eventLevels = require('./utils/eventLevels');
-
-var _helpers = require('./utils/helpers');
-
-var _propTypes = require('./utils/propTypes');
-
-var _selection = require('./utils/selection');
-
-var _Selection = require('./Selection');
-
-var _Selection2 = _interopRequireDefault(_Selection);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var BackgroundCells = function (_React$Component) {
-  _inherits(BackgroundCells, _React$Component);
-
-  function BackgroundCells(props, context) {
-    _classCallCheck(this, BackgroundCells);
-
-    var _this = _possibleConstructorReturn(this, _React$Component.call(this, props, context));
-
-    _this.state = {
-      selecting: false
-    };
-    return _this;
+    range: PropTypes.arrayOf(
+      PropTypes.instanceOf(Date)
+    ),
+    rtl: PropTypes.bool,
+    type: PropTypes.string,
   }
 
-  BackgroundCells.prototype.componentDidMount = function componentDidMount() {
-    this.props.selectable && this._selectable();
-  };
+  constructor(props, context) {
+    super(props, context);
 
-  BackgroundCells.prototype.componentWillUnmount = function componentWillUnmount() {
+    this.state = {
+      selecting: false
+    };
+  }
+
+  componentDidMount(){
+    this.props.selectable
+      && this._selectable()
+  }
+
+  componentWillUnmount() {
     this._teardownSelectable();
-  };
+  }
 
-  BackgroundCells.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-    if (nextProps.selectable && !this.props.selectable) this._selectable();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectable && !this.props.selectable)
+      this._selectable();
 
-    if (!nextProps.selectable && this.props.selectable) this._teardownSelectable();
-  };
+    if (!nextProps.selectable && this.props.selectable)
+      this._teardownSelectable();
+  }
 
-  BackgroundCells.prototype.render = function render() {
-    var _props = this.props,
-        range = _props.range,
-        Wrapper = _props.cellWrapperComponent;
-    var _state = this.state,
-        selecting = _state.selecting,
-        startIdx = _state.startIdx,
-        endIdx = _state.endIdx;
+  render(){
+    let { range, cellWrapperComponent: Wrapper } = this.props;
+    let { selecting, startIdx, endIdx } = this.state;
 
+    return (
+      <div className='rbc-row-bg'>
+        {range.map((date, index) => {
+          let selected =  selecting && index >= startIdx && index <= endIdx;
+          return (
+            <Wrapper key={index} value={date}>
+              <div
+                style={segStyle(1, range.length)}
+                className={cn(
+                  'rbc-day-bg',
+                  selected && 'rbc-selected-cell',
+                  dates.isToday(date) && 'rbc-today',
+                )}
+              />
+            </Wrapper>
+          )
+        })}
+      </div>
+    )
+  }
 
-    return _react2.default.createElement(
-      'div',
-      { className: 'rbc-row-bg' },
-      range.map(function (date, index) {
-        var selected = selecting && index >= startIdx && index <= endIdx;
-        return _react2.default.createElement(
-          Wrapper,
-          { key: index, value: date },
-          _react2.default.createElement('div', {
-            style: (0, _eventLevels.segStyle)(1, range.length),
-            className: (0, _classnames2.default)('rbc-day-bg', selected && 'rbc-selected-cell', _dates2.default.isToday(date) && 'rbc-today')
-          })
-        );
-      })
-    );
-  };
+  _selectable(){
+    let node = findDOMNode(this);
+    let selector = this._selector = new Selection(this.props.container)
 
-  BackgroundCells.prototype._selectable = function _selectable() {
-    var _this2 = this;
+    selector.on('selecting', box => {
+      let { range, rtl } = this.props;
 
-    var node = (0, _reactDom.findDOMNode)(this);
-    var selector = this._selector = new _Selection2.default(this.props.container);
+      let startIdx = -1;
+      let endIdx = -1;
 
-    selector.on('selecting', function (box) {
-      var _props2 = _this2.props,
-          range = _props2.range,
-          rtl = _props2.rtl;
-
-
-      var startIdx = -1;
-      var endIdx = -1;
-
-      if (!_this2.state.selecting) {
-        (0, _helpers.notify)(_this2.props.onSelectStart, [box]);
-        _this2._initial = { x: box.x, y: box.y };
+      if (!this.state.selecting) {
+        notify(this.props.onSelectStart, [box]);
+        this._initial = { x: box.x, y: box.y };
       }
       if (selector.isSelected(node)) {
-        var nodeBox = (0, _Selection.getBoundsForNode)(node);
+        let nodeBox = getBoundsForNode(node);
 
-        var _dateCellSelection = (0, _selection.dateCellSelection)(_this2._initial, nodeBox, box, range.length, rtl);
-
-        startIdx = _dateCellSelection.startIdx;
-        endIdx = _dateCellSelection.endIdx;
+        ({ startIdx, endIdx } = dateCellSelection(
+            this._initial
+          , nodeBox
+          , box
+          , range.length
+          , rtl));
       }
 
-      _this2.setState({
+      this.setState({
         selecting: true,
-        startIdx: startIdx, endIdx: endIdx
-      });
-    });
+        startIdx, endIdx
+      })
+    })
 
-    selector.on('mousedown', function (box) {
-      if (_this2.props.selectable !== 'ignoreEvents') return;
+    selector.on('mousedown', (box) => {
+      if (this.props.selectable !== 'ignoreEvents') return
 
-      return !(0, _Selection.isEvent)((0, _reactDom.findDOMNode)(_this2), box);
-    });
+      return !isEvent(findDOMNode(this), box)
+    })
 
-    selector.on('click', function (point) {
-      if (!(0, _Selection.isEvent)((0, _reactDom.findDOMNode)(_this2), point)) {
-        var rowBox = (0, _Selection.getBoundsForNode)(node);
-        var _props3 = _this2.props,
-            range = _props3.range,
-            rtl = _props3.rtl;
+    selector
+      .on('click', point => {
+        if (!isEvent(findDOMNode(this), point)) {
+          let rowBox = getBoundsForNode(node)
+          let { range, rtl } = this.props;
 
+          if (pointInBox(rowBox, point)) {
+            let width = slotWidth(getBoundsForNode(node),  range.length);
+            let currentCell = getCellAtX(rowBox, point.x, width, rtl, range.length);
 
-        if ((0, _selection.pointInBox)(rowBox, point)) {
-          var width = (0, _selection.slotWidth)((0, _Selection.getBoundsForNode)(node), range.length);
-          var currentCell = (0, _selection.getCellAtX)(rowBox, point.x, width, rtl, range.length);
-
-          _this2._selectSlot({
-            startIdx: currentCell,
-            endIdx: currentCell
-          });
+            this._selectSlot({
+              startIdx: currentCell,
+              endIdx: currentCell,
+              action: 'click',
+            })
+          }
         }
-      }
 
-      _this2._initial = {};
-      _this2.setState({ selecting: false });
-    });
+        this._initial = {}
+        this.setState({ selecting: false })
+      })
 
-    selector.on('select', function () {
-      _this2._selectSlot(_this2.state);
-      _this2._initial = {};
-      _this2.setState({ selecting: false });
-      (0, _helpers.notify)(_this2.props.onSelectEnd, [_this2.state]);
-    });
-  };
+    selector
+      .on('select', () => {
+        this._selectSlot({ ...this.state, action: 'select' })
+        this._initial = {}
+        this.setState({ selecting: false })
+        notify(this.props.onSelectEnd, [this.state]);
+      })
+  }
 
-  BackgroundCells.prototype._teardownSelectable = function _teardownSelectable() {
-    if (!this._selector) return;
+  _teardownSelectable() {
+    if (!this._selector) return
     this._selector.teardown();
     this._selector = null;
-  };
+  }
 
-  BackgroundCells.prototype._selectSlot = function _selectSlot(_ref) {
-    var endIdx = _ref.endIdx,
-        startIdx = _ref.startIdx;
+  _selectSlot({ endIdx, startIdx, action }) {
+    if (endIdx !== -1 && startIdx !== -1)
+      this.props.onSelectSlot &&
+        this.props.onSelectSlot({
+          start: startIdx,
+          end: endIdx,
+          action
+        })
+  }
+}
 
-    if (endIdx !== -1 && startIdx !== -1) this.props.onSelectSlot && this.props.onSelectSlot({
-      start: startIdx, end: endIdx
-    });
-  };
-
-  return BackgroundCells;
-}(_react2.default.Component);
-
-BackgroundCells.propTypes = {
-  cellWrapperComponent: _propTypes.elementType,
-  container: _react2.default.PropTypes.func,
-  selectable: _react2.default.PropTypes.oneOf([true, false, 'ignoreEvents']),
-
-  onSelectSlot: _react2.default.PropTypes.func.isRequired,
-  onSelectEnd: _react2.default.PropTypes.func,
-  onSelectStart: _react2.default.PropTypes.func,
-
-  range: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.instanceOf(Date)),
-  rtl: _react2.default.PropTypes.bool,
-  type: _react2.default.PropTypes.string
-};
-exports.default = BackgroundCells;
-module.exports = exports['default'];
+export default BackgroundCells;

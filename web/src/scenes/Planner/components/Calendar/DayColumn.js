@@ -1,376 +1,322 @@
-'use strict';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { findDOMNode } from 'react-dom';
+import cn from 'classnames';
 
-exports.__esModule = true;
+import Selection, { getBoundsForNode, isEvent } from './Selection';
+import dates from './utils/dates';
+import { isSelected } from './utils/selection';
+import localizer from './localizer'
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+import { notify } from './utils/helpers';
+import { accessor, elementType, dateFormat } from './utils/propTypes';
+import { accessor as get } from './utils/accessors';
 
-var _react = require('react');
+import getStyledEvents, { positionFromDate, startsBefore } from './utils/dayViewLayout'
 
-var _react2 = _interopRequireDefault(_react);
+import TimeColumn from './TimeColumn'
 
-var _reactDom = require('react-dom');
-
-var _classnames = require('classnames');
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _Selection = require('./Selection');
-
-var _Selection2 = _interopRequireDefault(_Selection);
-
-var _dates = require('./utils/dates');
-
-var _dates2 = _interopRequireDefault(_dates);
-
-var _selection = require('./utils/selection');
-
-var _localizer = require('./localizer');
-
-var _localizer2 = _interopRequireDefault(_localizer);
-
-var _helpers = require('./utils/helpers');
-
-var _propTypes = require('./utils/propTypes');
-
-var _accessors = require('./utils/accessors');
-
-var _dayViewLayout = require('./utils/dayViewLayout');
-
-var _dayViewLayout2 = _interopRequireDefault(_dayViewLayout);
-
-var _TimeColumn = require('./TimeColumn');
-
-var _TimeColumn2 = _interopRequireDefault(_TimeColumn);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-function snapToSlot(date, step) {
+function snapToSlot(date, step){
   var roundTo = 1000 * 60 * step;
-  return new Date(Math.floor(date.getTime() / roundTo) * roundTo);
+  return new Date(Math.floor(date.getTime() / roundTo) * roundTo)
 }
 
 function startsAfter(date, max) {
-  return _dates2.default.gt(_dates2.default.merge(max, date), max, 'minutes');
+  return dates.gt(dates.merge(max, date), max, 'minutes')
 }
 
-var DaySlot = _react2.default.createClass({
-  displayName: 'DaySlot',
+class DaySlot extends React.Component {
+  static propTypes = {
+    events: PropTypes.array.isRequired,
+    step: PropTypes.number.isRequired,
+    min: PropTypes.instanceOf(Date).isRequired,
+    max: PropTypes.instanceOf(Date).isRequired,
+    now: PropTypes.instanceOf(Date),
 
+    rtl: PropTypes.bool,
+    titleAccessor: accessor,
+    allDayAccessor: accessor.isRequired,
+    startAccessor: accessor.isRequired,
+    endAccessor: accessor.isRequired,
 
-  propTypes: {
-    events: _react2.default.PropTypes.array.isRequired,
-    step: _react2.default.PropTypes.number.isRequired,
-    min: _react2.default.PropTypes.instanceOf(Date).isRequired,
-    max: _react2.default.PropTypes.instanceOf(Date).isRequired,
-    now: _react2.default.PropTypes.instanceOf(Date),
+    selectRangeFormat: dateFormat,
+    eventTimeRangeFormat: dateFormat,
+    culture: PropTypes.string,
 
-    rtl: _react2.default.PropTypes.bool,
-    titleAccessor: _propTypes.accessor,
-    allDayAccessor: _propTypes.accessor.isRequired,
-    startAccessor: _propTypes.accessor.isRequired,
-    endAccessor: _propTypes.accessor.isRequired,
+    selected: PropTypes.object,
+    selectable: PropTypes.oneOf([true, false, 'ignoreEvents']),
+    eventOffset: PropTypes.number,
 
-    selectRangeFormat: _propTypes.dateFormat,
-    eventTimeRangeFormat: _propTypes.dateFormat,
-    culture: _react2.default.PropTypes.string,
+    onSelecting: PropTypes.func,
+    onSelectSlot: PropTypes.func.isRequired,
+    onSelectEvent: PropTypes.func.isRequired,
 
-    selected: _react2.default.PropTypes.object,
-    selectable: _react2.default.PropTypes.oneOf([true, false, 'ignoreEvents']),
-    eventOffset: _react2.default.PropTypes.number,
+    className: PropTypes.string,
+    dragThroughEvents: PropTypes.bool,
+    eventPropGetter: PropTypes.func,
+    dayWrapperComponent: elementType,
+    eventComponent: elementType,
+    eventWrapperComponent: elementType.isRequired,
+  };
 
-    onSelecting: _react2.default.PropTypes.func,
-    onSelectSlot: _react2.default.PropTypes.func.isRequired,
-    onSelectEvent: _react2.default.PropTypes.func.isRequired,
+  static defaultProps = { dragThroughEvents: true };
+  state = { selecting: false };
 
-    className: _react2.default.PropTypes.string,
-    dragThroughEvents: _react2.default.PropTypes.bool,
-    eventPropGetter: _react2.default.PropTypes.func,
-    dayWrapperComponent: _propTypes.elementType,
-    eventComponent: _propTypes.elementType,
-    eventWrapperComponent: _propTypes.elementType.isRequired
-  },
+  componentDidMount() {
+    this.props.selectable
+    && this._selectable()
+  }
 
-  getDefaultProps: function getDefaultProps() {
-    return { dragThroughEvents: true };
-  },
-  getInitialState: function getInitialState() {
-    return { selecting: false };
-  },
-  componentDidMount: function componentDidMount() {
-    this.props.selectable && this._selectable();
-  },
-  componentWillUnmount: function componentWillUnmount() {
+  componentWillUnmount() {
     this._teardownSelectable();
-  },
-  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    if (nextProps.selectable && !this.props.selectable) this._selectable();
-    if (!nextProps.selectable && this.props.selectable) this._teardownSelectable();
-  },
-  render: function render() {
-    var _props = this.props,
-        min = _props.min,
-        max = _props.max,
-        step = _props.step,
-        now = _props.now,
-        selectRangeFormat = _props.selectRangeFormat,
-        culture = _props.culture,
-        props = _objectWithoutProperties(_props, ['min', 'max', 'step', 'now', 'selectRangeFormat', 'culture']);
+  }
 
-    this._totalMin = _dates2.default.diff(min, max, 'minutes');
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectable && !this.props.selectable)
+      this._selectable();
+    if (!nextProps.selectable && this.props.selectable)
+      this._teardownSelectable();
+  }
 
-    var _state = this.state,
-        selecting = _state.selecting,
-        startSlot = _state.startSlot,
-        endSlot = _state.endSlot;
+  render() {
+    const {
+      min,
+      max,
+      step,
+      now,
+      selectRangeFormat,
+      culture,
+      ...props
+    } = this.props
 
-    var style = this._slotStyle(startSlot, endSlot);
+    this._totalMin = dates.diff(min, max, 'minutes')
 
-    var selectDates = {
+    let { selecting, startSlot, endSlot } = this.state
+    let style = this._slotStyle(startSlot, endSlot)
+
+    let selectDates = {
       start: this.state.startDate,
       end: this.state.endDate
     };
 
-    return _react2.default.createElement(
-      _TimeColumn2.default,
-      _extends({}, props, {
-        className: (0, _classnames2.default)('rbc-day-slot', _dates2.default.isToday(max) && 'rbc-today'),
-        now: now,
-        min: min,
-        max: max,
-        step: step
-      }),
-      this.renderEvents(),
-      selecting && _react2.default.createElement(
-        'div',
-        { className: 'rbc-slot-selection', style: style },
-        _react2.default.createElement(
-          'span',
-          null,
-          _localizer2.default.format(selectDates, selectRangeFormat, culture)
-        )
-      )
+    return (
+      <TimeColumn
+        {...props}
+        className={cn(
+          'rbc-day-slot',
+          dates.isToday(max) && 'rbc-today'
+        )}
+        now={now}
+        min={min}
+        max={max}
+        step={step}
+      >
+        {this.renderEvents()}
+
+        {selecting &&
+          <div className='rbc-slot-selection' style={style}>
+              <span>
+              { localizer.format(selectDates, selectRangeFormat, culture) }
+              </span>
+          </div>
+        }
+      </TimeColumn>
     );
-  },
-  renderEvents: function renderEvents() {
-    var _this = this;
+  }
 
-    var _props2 = this.props,
-        events = _props2.events,
-        min = _props2.min,
-        max = _props2.max,
-        culture = _props2.culture,
-        eventPropGetter = _props2.eventPropGetter,
-        selected = _props2.selected,
-        eventTimeRangeFormat = _props2.eventTimeRangeFormat,
-        eventComponent = _props2.eventComponent,
-        EventWrapper = _props2.eventWrapperComponent,
-        isRtl = _props2.rtl,
-        step = _props2.step,
-        startAccessor = _props2.startAccessor,
-        endAccessor = _props2.endAccessor,
-        titleAccessor = _props2.titleAccessor;
+  renderEvents = () => {
+    let {
+        events
+      , min
+      , max
+      , culture
+      , eventPropGetter
+      , selected, eventTimeRangeFormat, eventComponent
+      , eventWrapperComponent: EventWrapper
+      , rtl: isRtl
+      , step
+      , startAccessor, endAccessor, titleAccessor } = this.props;
 
+    let EventComponent = eventComponent
 
-    var EventComponent = eventComponent;
+    let styledEvents = getStyledEvents({
+      events, startAccessor, endAccessor, min, totalMin: this._totalMin, step
+    })
 
-    var styledEvents = (0, _dayViewLayout2.default)({
-      events: events, startAccessor: startAccessor, endAccessor: endAccessor, min: min, totalMin: this._totalMin, step: step
-    });
+    return styledEvents.map(({ event, style }, idx) => {
+      let start = get(event, startAccessor)
+      let end = get(event, endAccessor)
 
-    return styledEvents.map(function (_ref, idx) {
-      var _extends2;
+      let continuesPrior = startsBefore(start, min)
+      let continuesAfter = startsAfter(end, max)
 
-      var event = _ref.event,
-          style = _ref.style;
+      let title = get(event, titleAccessor)
+      let label = localizer.format({ start, end }, eventTimeRangeFormat, culture)
+      let _isSelected = isSelected(event, selected)
 
-      var start = (0, _accessors.accessor)(event, startAccessor);
-      var end = (0, _accessors.accessor)(event, endAccessor);
+      if (eventPropGetter)
+        var { style: xStyle, className } = eventPropGetter(event, start, end, _isSelected)
 
-      var continuesPrior = (0, _dayViewLayout.startsBefore)(start, min);
-      var continuesAfter = startsAfter(end, max);
+      let { height, top, width, xOffset } = style
 
-      var title = (0, _accessors.accessor)(event, titleAccessor);
-      var label = _localizer2.default.format({ start: start, end: end }, eventTimeRangeFormat, culture);
-      var _isSelected = (0, _selection.isSelected)(event, selected);
-
-      if (eventPropGetter) var _eventPropGetter = eventPropGetter(event, start, end, _isSelected),
-            xStyle = _eventPropGetter.style,
-            className = _eventPropGetter.className;
-
-      var height = style.height,
-          top = style.top,
-          width = style.width,
-          xOffset = style.xOffset;
-
-
-      return _react2.default.createElement(
-        EventWrapper,
-        { event: event, key: 'evt_' + idx },
-        _react2.default.createElement(
-          'div',
-          {
-            style: _extends({}, xStyle, (_extends2 = {
-              top: top + '%',
-              height: height + '%'
-            }, _extends2[isRtl ? 'right' : 'left'] = Math.max(0, xOffset) + '%', _extends2.width = width + '%', _extends2)),
-            title: label + ': ' + title,
-            onClick: function onClick(e) {
-              return _this._select(event, e);
-            },
-            className: (0, _classnames2.default)('rbc-event', className, {
+      return (
+        <EventWrapper event={event} key={'evt_' + idx}>
+          <div
+            style={{
+              ...xStyle,
+              top: `${top}%`,
+              height: `${height}%`,
+              [isRtl ? 'right' : 'left']: `${Math.max(0, xOffset)}%`,
+              width: `${width}%`
+            }}
+            title={label + ': ' + title }
+            onClick={(e) => this._select(event, e)}
+            className={cn('rbc-event', className, {
               'rbc-selected': _isSelected,
               'rbc-event-continues-earlier': continuesPrior,
               'rbc-event-continues-later': continuesAfter
-            })
-          },
-          _react2.default.createElement(
-            'div',
-            { className: 'rbc-event-label' },
-            label
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'rbc-event-content' },
-            EventComponent ? _react2.default.createElement(EventComponent, { event: event, title: title }) : title
-          )
-        )
-      );
-    });
-  },
-  _slotStyle: function _slotStyle(startSlot, endSlot) {
-    var top = startSlot / this._totalMin * 100;
-    var bottom = endSlot / this._totalMin * 100;
+            })}
+          >
+            <div className='rbc-event-label'>{label}</div>
+            <div className='rbc-event-content'>
+              { EventComponent
+                ? <EventComponent event={event} title={title}/>
+                : title
+              }
+            </div>
+          </div>
+        </EventWrapper>
+      )
+    })
+  };
+
+  _slotStyle = (startSlot, endSlot) => {
+    let top = ((startSlot / this._totalMin) * 100);
+    let bottom = ((endSlot / this._totalMin) * 100);
 
     return {
       top: top + '%',
       height: bottom - top + '%'
-    };
-  },
-  _selectable: function _selectable() {
-    var _this2 = this;
+    }
+  };
 
-    var node = (0, _reactDom.findDOMNode)(this);
-    var selector = this._selector = new _Selection2.default(function () {
-      return (0, _reactDom.findDOMNode)(_this2);
-    });
+  _selectable = () => {
+    let node = findDOMNode(this);
+    let selector = this._selector = new Selection(()=> findDOMNode(this))
 
-    var maybeSelect = function maybeSelect(box) {
-      var onSelecting = _this2.props.onSelecting;
-      var current = _this2.state || {};
-      var state = selectionState(box);
-      var start = state.startDate,
-          end = state.endDate;
-
+    let maybeSelect = (box) => {
+      let onSelecting = this.props.onSelecting
+      let current = this.state || {};
+      let state = selectionState(box);
+      let { startDate: start, endDate: end } = state;
 
       if (onSelecting) {
-        if (_dates2.default.eq(current.startDate, start, 'minutes') && _dates2.default.eq(current.endDate, end, 'minutes') || onSelecting({ start: start, end: end }) === false) return;
+        if (
+          (dates.eq(current.startDate, start, 'minutes') &&
+          dates.eq(current.endDate, end, 'minutes')) ||
+          onSelecting({ start, end }) === false
+        )
+          return
       }
 
-      _this2.setState(state);
-    };
+      this.setState(state)
+    }
 
-    var selectionState = function selectionState(_ref2) {
-      var y = _ref2.y;
-      var _props3 = _this2.props,
-          step = _props3.step,
-          min = _props3.min,
-          max = _props3.max;
+    let selectionState = ({ y }) => {
+      let { step, min, max } = this.props;
+      let { top, bottom } = getBoundsForNode(node)
 
-      var _getBoundsForNode = (0, _Selection.getBoundsForNode)(node),
-          top = _getBoundsForNode.top,
-          bottom = _getBoundsForNode.bottom;
+      let mins = this._totalMin;
 
-      var mins = _this2._totalMin;
+      let range = Math.abs(top - bottom)
 
-      var range = Math.abs(top - bottom);
+      let current = (y - top) / range;
 
-      var current = (y - top) / range;
+      current = snapToSlot(minToDate(mins * current, min), step)
 
-      current = snapToSlot(minToDate(mins * current, min), step);
+      if (!this.state.selecting)
+        this._initialDateSlot = current
 
-      if (!_this2.state.selecting) _this2._initialDateSlot = current;
+      let initial = this._initialDateSlot;
 
-      var initial = _this2._initialDateSlot;
+      if (dates.eq(initial, current, 'minutes'))
+        current = dates.add(current, step, 'minutes')
 
-      if (_dates2.default.eq(initial, current, 'minutes')) current = _dates2.default.add(current, step, 'minutes');
-
-      var start = _dates2.default.max(min, _dates2.default.min(initial, current));
-      var end = _dates2.default.min(max, _dates2.default.max(initial, current));
+      let start = dates.max(min, dates.min(initial, current))
+      let end = dates.min(max, dates.max(initial, current))
 
       return {
         selecting: true,
         startDate: start,
         endDate: end,
-        startSlot: (0, _dayViewLayout.positionFromDate)(start, min, _this2._totalMin),
-        endSlot: (0, _dayViewLayout.positionFromDate)(end, min, _this2._totalMin)
-      };
-    };
-
-    selector.on('selecting', maybeSelect);
-    selector.on('selectStart', maybeSelect);
-
-    selector.on('mousedown', function (box) {
-      if (_this2.props.selectable !== 'ignoreEvents') return;
-
-      return !(0, _Selection.isEvent)((0, _reactDom.findDOMNode)(_this2), box);
-    });
-
-    selector.on('click', function (box) {
-      if (!(0, _Selection.isEvent)((0, _reactDom.findDOMNode)(_this2), box)) _this2._selectSlot(selectionState(box));
-
-      _this2.setState({ selecting: false });
-    });
-
-    selector.on('select', function () {
-      if (_this2.state.selecting) {
-        _this2._selectSlot(_this2.state);
-        _this2.setState({ selecting: false });
+        startSlot: positionFromDate(start, min, this._totalMin),
+        endSlot: positionFromDate(end, min, this._totalMin)
       }
-    });
-  },
-  _teardownSelectable: function _teardownSelectable() {
-    if (!this._selector) return;
+    }
+
+    selector.on('selecting', maybeSelect)
+    selector.on('selectStart', maybeSelect)
+
+    selector.on('mousedown', (box) => {
+      if (this.props.selectable !== 'ignoreEvents') return
+
+      return !isEvent(findDOMNode(this), box)
+    })
+
+    selector
+      .on('click', (box) => {
+        if (!isEvent(findDOMNode(this), box))
+          this._selectSlot({ ...selectionState(box), action: 'click' })
+
+        this.setState({ selecting: false })
+      })
+
+    selector
+      .on('select', () => {
+        if (this.state.selecting) {
+          this._selectSlot({ ...this.state, action: 'select' })
+          this.setState({ selecting: false })
+        }
+      })
+  };
+
+  _teardownSelectable = () => {
+    if (!this._selector) return
     this._selector.teardown();
     this._selector = null;
-  },
-  _selectSlot: function _selectSlot(_ref3) {
-    var startDate = _ref3.startDate,
-        endDate = _ref3.endDate;
+  };
 
-    var current = startDate,
-        slots = [];
+  _selectSlot = ({ startDate, endDate, action }) => {
+    let current = startDate
+      , slots = [];
 
-    while (_dates2.default.lte(current, endDate)) {
-      slots.push(current);
-      current = _dates2.default.add(current, this.props.step, 'minutes');
+    while (dates.lte(current, endDate)) {
+      slots.push(current)
+      current = dates.add(current, this.props.step, 'minutes')
     }
 
-    (0, _helpers.notify)(this.props.onSelectSlot, {
-      slots: slots,
+    notify(this.props.onSelectSlot, {
+      slots,
       start: startDate,
-      end: endDate
-    });
-  },
-  _select: function _select() {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+      end: endDate,
+      action
+    })
+  };
 
-    (0, _helpers.notify)(this.props.onSelectEvent, args);
-  }
-});
-
-function minToDate(min, date) {
-  var dt = new Date(date),
-      totalMins = _dates2.default.diff(_dates2.default.startOf(date, 'day'), date, 'minutes');
-
-  dt = _dates2.default.hours(dt, 0);
-  dt = _dates2.default.minutes(dt, totalMins + min);
-  dt = _dates2.default.seconds(dt, 0);
-  return _dates2.default.milliseconds(dt, 0);
+  _select = (...args) => {
+    notify(this.props.onSelectEvent, args)
+  };
 }
 
-exports.default = DaySlot;
-module.exports = exports['default'];
+
+function minToDate(min, date){
+  var dt = new Date(date)
+    , totalMins = dates.diff(dates.startOf(date, 'day'), date, 'minutes');
+
+  dt = dates.hours(dt, 0);
+  dt = dates.minutes(dt, totalMins + min);
+  dt = dates.seconds(dt, 0)
+  return dates.milliseconds(dt, 0)
+}
+
+export default DaySlot;
