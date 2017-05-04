@@ -136,10 +136,12 @@ class Planner extends Component {
 				</header>
 				<div className="app-container row">
 					<div className="col-lg-12">
-				        <Route path={links[0].link} exact component={() => ( <Calendar events={this.state.events} view={'month'} defaultDate={new Date(2015, 3, 1)} /> )} />
-				        <Route path={links[1].link} exact component={() => ( <Calendar events={this.state.events} view={'week'} defaultDate={new Date(2015, 3, 1)} /> )} />
-				        <Route path={links[2].link} exact component={() => ( <Calendar events={this.state.events} view={'day'} defaultDate={new Date(2015, 3, 1)} /> )} />
-				        <Route path={links[2].link} exact component={() => ( <Calendar events={this.state.events} view={'agenda'} defaultDate={new Date(2015, 3, 1)} /> )} />
+						<div className="planner block row">
+					        <Route path={links[0].link} exact component={() => ( <Calendar events={this.state.events} view={'month'} defaultDate={new Date(2015, 3, 1)} /> )} />
+					        <Route path={links[1].link} exact component={() => ( <Calendar events={this.state.events} view={'week'} defaultDate={new Date(2015, 3, 1)} /> )} />
+					        <Route path={links[2].link} exact component={() => ( <Calendar events={this.state.events} view={'day'} defaultDate={new Date(2015, 3, 1)} /> )} />
+					        <Route path={links[2].link} exact component={() => ( <Calendar events={this.state.events} view={'agenda'} defaultDate={new Date(2015, 3, 1)} /> )} />
+						</div>
 					</div>
 				</div>
 			</div>
