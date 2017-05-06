@@ -23,36 +23,33 @@ class Toolbar extends React.Component {
 
     return (
       <div className='rbc-toolbar'>
-        <span className='rbc-btn-group'>
-          <button
-            type='button'
-            onClick={this.navigate.bind(null, navigate.TODAY)}
-          >
-            {messages.today}
-          </button>
-          <button
-            type='button'
-            onClick={this.navigate.bind(null, navigate.PREVIOUS)}
-          >
-            {messages.previous}
-          </button>
-          <button
-            type='button'
-            onClick={this.navigate.bind(null, navigate.NEXT)}
-          >
-            {messages.next}
-          </button>
-        </span>
+        <div className="col-lg-9">
+          <span className='rbc-btn-group'>
+            <a onClick={this.navigate.bind(null, navigate.PREVIOUS)} >
+              <i className="fa fa-caret-left" aria-hidden="true"></i>
+            </a>
+            <a onClick={this.navigate.bind(null, navigate.TODAY)} >
+              <i className="fa fa-dot-circle-o" aria-hidden="true"></i>
+            </a>
+            <a onClick={this.navigate.bind(null, navigate.NEXT)} >
+              <i className="fa fa-caret-right" aria-hidden="true"></i>
+            </a>
+          </span>
+          <span className='rbc-toolbar-label'>
+            { label }
+          </span>
 
-        <span className='rbc-toolbar-label'>
-          { label }
-        </span>
-
-        <span className='rbc-btn-group'>
-        {
-          this.viewNamesGroup(messages)
-        }
-        </span>
+          <ul className="calendar-filter">
+            <li><i></i>Meeting</li>
+            <li><i></i>Meeting</li>
+            <li><i></i>Meeting</li>
+            <li><i></i>Meeting</li>
+            <li><i></i>Meeting</li>
+          </ul>
+        </div>
+        <div className="col-lg-3 end-md">
+          <a className="btn" href="">New item</a>
+        </div>
       </div>
     );
   }

@@ -25,32 +25,37 @@ let propTypes = {
 class EventCell extends React.Component {
   render() {
     let {
-        className
-      , event
-      , selected
-      , eventPropGetter
-      , startAccessor, endAccessor, titleAccessor
-      , slotStart
-      , slotEnd
-      , onSelect
-      , eventComponent: Event
-      , eventWrapperComponent: EventWrapper
-      , ...props } = this.props;
+        className,
+        event,
+        selected,
+        eventPropGetter,
+        startAccessor,
+        endAccessor,
+        titleAccessor,
+        slotStart,
+        slotEnd,
+        onSelect,
+        eventComponent: Event,
+        eventWrapperComponent: EventWrapper,
+        ...props
+      } = this.props;
 
-    let title = get(event, titleAccessor)
-      , end = get(event, endAccessor)
-      , start = get(event, startAccessor)
-      , isAllDay = get(event, props.allDayAccessor)
-      , continuesPrior = dates.lt(start, slotStart, 'day')
-      , continuesAfter = dates.gt(end, slotEnd, 'day')
+    let title = get(event, titleAccessor),
+        end = get(event, endAccessor),
+        start = get(event, startAccessor),
+        isAllDay = get(event, props.allDayAccessor),
+        continuesPrior = dates.lt(start, slotStart, 'day'),
+        continuesAfter = dates.gt(end, slotEnd, 'day')
 
     if (eventPropGetter)
       var { style, className: xClassName } = eventPropGetter(event, start, end, selected);
 
+      let bgColor = this.props.event.colour ? '#' + this.props.event.colour : '#58a4f2';
+      console.log(bgColor);
     return (
       <EventWrapper event={event}>
         <div
-          style={{...props.style, ...style}}
+          style={{...props.style, backgroundColor: bgColor, ...style}}
           className={cn('rbc-event', className, xClassName, {
             'rbc-selected': selected,
             'rbc-event-allday': isAllDay || dates.diff(start, dates.ceil(end, 'day'), 'day') > 1,
@@ -60,10 +65,7 @@ class EventCell extends React.Component {
           onClick={(e) => onSelect(event, e)}
         >
           <div className='rbc-event-content' title={title}>
-            { Event
-              ? <Event event={event} title={title}/>
-              : title
-            }
+            { Event ? <Event event={event} title={title}/> : title }
           </div>
         </div>
       </EventWrapper>
