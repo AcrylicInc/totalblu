@@ -6,8 +6,9 @@ import moment from 'moment';
 
 
 import Navigation from 'components/Navigation/';
-
 import Calendar from 'components/Calendar/';
+
+import NewItem from './components/NewItem';
 
 import * as ActionCreators from './actions';
 
@@ -164,7 +165,8 @@ class Planner extends Component {
 					        <Route path={links[0].link} exact component={() => ( <Calendar events={this.state.events} onView={'monthly'} view={'monthly'} defaultDate={new Date(2017, 3, 1)} /> )} />
 					        <Route path={links[1].link} exact component={() => ( <Calendar events={this.state.events} onView={'weekly'} view={'weekly'} defaultDate={new Date(2017, 3, 1)} /> )} />
 					        <Route path={links[2].link} exact component={() => ( <Calendar events={this.state.events} onView={'daily'} view={'daily'} defaultDate={new Date(2017, 3, 1)} /> )} />
-					        <Route path={links[2].link} exact component={() => ( <Calendar events={this.state.events} onView={'agenda'} view={'agenda'} defaultDate={new Date(2017, 3, 1)} /> )} />
+									<Route path={links[2].link} exact component={() => ( <Calendar events={this.state.events} onView={'agenda'} view={'agenda'} defaultDate={new Date(2017, 3, 1)} /> )} />
+					        <Route path={'/app_dev.php/planner/new-item'} exact component={() => ( <NewItem /> )} />
 						</div>
 					</div>
 				</div>

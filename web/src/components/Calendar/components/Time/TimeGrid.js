@@ -134,13 +134,14 @@ export default class TimeGrid extends Component {
 
   render() {
     let {
-        events
-      , start
-      , end
-      , width
-      , startAccessor
-      , endAccessor
-      , allDayAccessor } = this.props;
+        events,
+        start,
+        end,
+        width,
+        startAccessor,
+        endAccessor,
+        allDayAccessor
+    } = this.props;
 
     width = width || this.state.gutterWidth;
 
@@ -148,8 +149,8 @@ export default class TimeGrid extends Component {
 
     this.slots = range.length;
 
-    let allDayEvents = []
-      , rangeEvents = [];
+    let allDayEvents = [],
+        rangeEvents = [];
 
     events.forEach(event => {
       if (inRange(event, start, end, this.props)) {
@@ -281,7 +282,10 @@ export default class TimeGrid extends Component {
 
   renderHeaderCells(range){
     let { dayFormat, culture, components, getDrilldownView } = this.props;
-    let HeaderComponent = components.header
+    const Header = ({ label }) => {
+      return <span>{label}</span>
+    }
+    let HeaderComponent = components.header || Header;
 
     return range.map((date, i) => {
       let drilldownView = getDrilldownView(date);

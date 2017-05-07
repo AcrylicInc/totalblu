@@ -23,10 +23,11 @@ class PlannerController extends Controller implements TokenAuthenticatedControll
      * @Route("/planner", name="planner")
      * @Route("/planner/weekly", name="planner_weekly")
      * @Route("/planner/monthly", name="planner_monthly")
+     * @Route("/planner/new-item", name="planner_new_item")
      */
     public function plannerAction(Request $request)
     {
-    
+
         $this->em = $this->getDoctrine()->getManager();
 
         return $this->render('profile/overview.html.twig', array(
