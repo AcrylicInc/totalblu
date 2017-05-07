@@ -7,7 +7,7 @@ import moment from 'moment';
 
 import Navigation from 'components/Navigation/';
 
-import Calendar from './components/Calendar/';
+import Calendar from 'components/Calendar/';
 
 import * as ActionCreators from './actions';
 
@@ -30,15 +30,15 @@ class Planner extends Component {
 			    'allDay': true,
 					'colour': '58a4f2',
 					'group': 'meeting',
-			    'start': new Date(2015, 3, 0),
-			    'end': new Date(2015, 3, 1)
+			    'start': new Date(2017, 3, 0),
+			    'end': new Date(2017, 3, 1)
 			  },
 			  {
 			    'title': 'Long Event',
 					'colour': '58a4f2',
 					'group': 'meeting',
-			    'start': new Date(2015, 3, 7),
-			    'end': new Date(2015, 3, 10)
+			    'start': new Date(2017, 3, 7),
+			    'end': new Date(2017, 3, 10)
 			  },
 
 			  {
@@ -61,61 +61,61 @@ class Planner extends Component {
 			    'title': 'Some Event',
 					'colour': '58a4f2',
 					'group': 'meeting',
-			    'start': new Date(2015, 3, 9, 0, 0, 0),
-			    'end': new Date(2015, 3, 9, 0, 0, 0)
+			    'start': new Date(2017, 3, 9, 0, 0, 0),
+			    'end': new Date(2017, 3, 9, 0, 0, 0)
 			  },
 			  {
 			    'title': 'Conference',
 					'colour': '58a4f2',
 					'group': 'meeting',
-			    'start': new Date(2015, 3, 11),
-			    'end': new Date(2015, 3, 13),
+			    'start': new Date(2017, 3, 11),
+			    'end': new Date(2017, 3, 13),
 			    desc: 'Big conference for important people'
 			  },
 			  {
 			    'title': 'Meeting',
 					'colour': '58a4f2',
 					'group': 'meeting',
-			    'start': new Date(2015, 3, 12, 10, 30, 0, 0),
-			    'end': new Date(2015, 3, 12, 12, 30, 0, 0),
+			    'start': new Date(2017, 3, 12, 10, 30, 0, 0),
+			    'end': new Date(2017, 3, 12, 12, 30, 0, 0),
 			    desc: 'Pre-meeting meeting, to prepare for the meeting'
 			  },
 			  {
 			    'title': 'Lunch',
 					'colour': '58a4f2',
 					'group': 'meeting',
-			    'start':new Date(2015, 3, 12, 12, 0, 0, 0),
-			    'end': new Date(2015, 3, 12, 13, 0, 0, 0),
+			    'start':new Date(2017, 3, 12, 12, 0, 0, 0),
+			    'end': new Date(2017, 3, 12, 13, 0, 0, 0),
 			    desc: 'Power lunch'
 			  },
 			  {
 			    'title': 'Meeting',
 					'colour': '58a4f2',
 					'group': 'meeting',
-			    'start':new Date(2015, 3, 12,14, 0, 0, 0),
-			    'end': new Date(2015, 3, 12,15, 0, 0, 0)
+			    'start':new Date(2017, 3, 12,14, 0, 0, 0),
+			    'end': new Date(2017, 3, 12,15, 0, 0, 0)
 			  },
 			  {
 			    'title': 'Happy Hour',
 					'colour': '58a4f2',
 					'group': 'meeting',
-			    'start':new Date(2015, 3, 12, 17, 0, 0, 0),
-			    'end': new Date(2015, 3, 12, 17, 30, 0, 0),
+			    'start':new Date(2017, 3, 12, 17, 0, 0, 0),
+			    'end': new Date(2017, 3, 12, 17, 30, 0, 0),
 			    desc: 'Most important meal of the day'
 			  },
 			  {
 			    'title': 'Dinner',
 					'colour': '58a4f2',
 					'group': 'meeting',
-			    'start':new Date(2015, 3, 12, 20, 0, 0, 0),
-			    'end': new Date(2015, 3, 12, 21, 0, 0, 0)
+			    'start':new Date(2017, 3, 12, 20, 0, 0, 0),
+			    'end': new Date(2017, 3, 12, 21, 0, 0, 0)
 			  },
 			  {
 			    'title': 'Birthday Party',
 					'colour': '58a4f2',
 					'group': 'meeting',
-			    'start':new Date(2015, 3, 13, 7, 0, 0),
-			    'end': new Date(2015, 3, 13, 10, 30, 0)
+			    'start':new Date(2017, 3, 13, 7, 0, 0),
+			    'end': new Date(2017, 3, 13, 10, 30, 0)
 			  }
 			]
 		}
@@ -161,10 +161,10 @@ class Planner extends Component {
 				<div className="app-container row">
 					<div className="col-lg-12">
 						<div className="planner block row">
-					        <Route path={links[0].link} exact component={() => ( <Calendar events={this.state.events} onView={'month'} view={'month'} defaultDate={new Date(2015, 3, 1)} /> )} />
-					        <Route path={links[1].link} exact component={() => ( <Calendar events={this.state.events} onView={'week'} view={'week'} defaultDate={new Date(2015, 3, 1)} /> )} />
-					        <Route path={links[2].link} exact component={() => ( <Calendar events={this.state.events} onView={'day'} view={'day'} defaultDate={new Date(2015, 3, 1)} /> )} />
-					        <Route path={links[2].link} exact component={() => ( <Calendar events={this.state.events} onView={'agenda'} view={'agenda'} defaultDate={new Date(2015, 3, 1)} /> )} />
+					        <Route path={links[0].link} exact component={() => ( <Calendar events={this.state.events} onView={'monthly'} view={'monthly'} defaultDate={new Date(2017, 3, 1)} /> )} />
+					        <Route path={links[1].link} exact component={() => ( <Calendar events={this.state.events} onView={'weekly'} view={'weekly'} defaultDate={new Date(2017, 3, 1)} /> )} />
+					        <Route path={links[2].link} exact component={() => ( <Calendar events={this.state.events} onView={'daily'} view={'daily'} defaultDate={new Date(2017, 3, 1)} /> )} />
+					        <Route path={links[2].link} exact component={() => ( <Calendar events={this.state.events} onView={'agenda'} view={'agenda'} defaultDate={new Date(2017, 3, 1)} /> )} />
 						</div>
 					</div>
 				</div>
