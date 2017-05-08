@@ -6,7 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
-use AppBundle\Entity\Company;
+
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="tb_users")
@@ -92,11 +93,12 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $company;
 
+    /**
+   * @ORM\ManyToMany(targetEntity="Event", inversedBy="users")
+   * @ORM\JoinTable(name="users_events")
+   */
+   protected $events;
 
-
-    
-//http://stackoverflow.com/questions/25501698/one-to-many-relationship-on-the-same-table
-    
     /**
      * @ORM\Column(name="is_active", type="boolean")
      */
@@ -105,13 +107,14 @@ class User implements AdvancedUserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
+        $this->events     = new ArrayCollection();
 
     }
 
     public function getID()
     {
         return $this->id;
-    } 
+    }
 
 
     public function getCompany()
@@ -122,6 +125,40 @@ class User implements AdvancedUserInterface, \Serializable
     public function setCompany($company)
     {
         $this->company = $company;
+    }
+
+    /**
+     * Add event
+     *
+     * @param \AppBundle\Entity\Event $event
+     *
+     * @return User
+     */
+    public function addEvent(\AppBundle\Entity\Event $event)
+    {
+        $this->event[] = $event;
+
+        return $this;
+    }
+
+    /**
+     * Remove event
+     *
+     * @param \AppBundle\Entity\Event $event
+     */
+    public function removeEvent(\AppBundle\Entity\Event $event)
+    {
+        $this->events->removeElement($event);
+    }
+
+    /**
+     * Get events
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 
     public function getEmailAddress()
@@ -137,7 +174,7 @@ class User implements AdvancedUserInterface, \Serializable
     public function getFirstName()
     {
         return $this->firstName;
-    }   
+    }
 
     public function setFirstName($firstName)
     {
@@ -147,7 +184,7 @@ class User implements AdvancedUserInterface, \Serializable
     public function getLastName()
     {
         return $this->lastName;
-    }   
+    }
 
     public function setLastName($lastName)
     {
@@ -172,7 +209,7 @@ class User implements AdvancedUserInterface, \Serializable
     public function setPlainPassword($password)
     {
         $this->plainPassword = $password;
-    }  
+    }
 
     public function getPassword()
     {
@@ -193,7 +230,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     public function getRoles()
     {
-        
+
         $roles = $this->roles;
 
         // Set role_manager as default!
